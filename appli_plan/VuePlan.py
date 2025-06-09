@@ -1,3 +1,8 @@
+# Auteur:
+#   Willem VANBAELINGHEM--DEZITTER - TPA
+# création -> 09/06/2025
+# dernière MAJ -> 09/06/2025
+
 import sys
 from PyQt6.QtWidgets import QApplication, QWidget, \
                             QGraphicsScene, QGraphicsView, QGraphicsItem, \
