@@ -32,7 +32,7 @@ class SceneMagasin(QGraphicsScene):
 
         
         # Quadrillage
-        lignes, colonnes = 25, 25
+        lignes, colonnes = 22, 32
         tailleX = larg / colonnes
         tailleY = haut / lignes
         for i in range(lignes):
