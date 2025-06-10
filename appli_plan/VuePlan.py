@@ -1,6 +1,6 @@
 # Auteur:
 #   Alex François - TPA
-# création -> 10/06/2025
+# création -> 10v/06/2025
 # dernière MAJ -> 10/06/2025
 
 import sys
