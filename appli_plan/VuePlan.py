@@ -1,14 +1,13 @@
 # Auteur:
 #   Willem VANBAELINGHEM--DEZITTER - TPA
 # création -> 09/06/2025
-# dernière MAJ -> 09/06/2025
+# dernière MAJ -> 10/06/2025
 
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget, \
-                            QGraphicsScene, QGraphicsView, QGraphicsItem, \
-                            QGraphicsPixmapItem, QGraphicsRectItem, \
-                            QGraphicsEllipseItem, QGraphicsLineItem
-from PyQt6.QtGui import QBrush, QPen, QPixmap, QColor
+from PyQt6.QtWidgets import QApplication, \
+                            QGraphicsScene, QGraphicsView, \
+                            QGraphicsPixmapItem, QGraphicsRectItem
+from PyQt6.QtGui import QBrush, QPixmap
 from PyQt6.QtCore import Qt
 
 class SceneMagasin(QGraphicsScene):
@@ -19,9 +18,10 @@ class SceneMagasin(QGraphicsScene):
         
         # appel au constructeur de la classe mère        
         super().__init__() 
-        
-        largeur_plan = 800
-        hauteur_plan = 800
+  
+        #dimmension du plan      
+        largeur_plan = 1000
+        hauteur_plan = 1000
         
         
         # Chargement du plan
@@ -54,7 +54,8 @@ class MagasinView(QGraphicsView):
         self.scene_magasin = SceneMagasin()
         self.setScene(self.scene_magasin)
         # taille adaptée à la scène
-        self.setFixedSize(int(self.scene_magasin.width()) + 5, int(self.scene_magasin.height()) + 5)
+        self.setFixedSize(int(self.scene_magasin.width()) + 5, 
+                          int(self.scene_magasin.height()) + 5)
         
 
 # --- main ------------------------------------------------------------------
