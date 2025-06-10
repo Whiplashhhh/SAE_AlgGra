@@ -1,3 +1,7 @@
+# Auteur:
+#   Romain Théobald - TPB
+# création -> 10/06/2025
+# dernière MAJ -> 10/06/2025
 import json
 import numpy as np
 
