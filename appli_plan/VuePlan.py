@@ -20,8 +20,8 @@ class SceneMagasin(QGraphicsScene):
         # appel au constructeur de la classe mère        
         super().__init__() 
         
-        largeur_plan = 800
-        hauteur_plan = 800
+        largeur_plan = 1000
+        hauteur_plan = 1000
         
         
         # Chargement du plan
