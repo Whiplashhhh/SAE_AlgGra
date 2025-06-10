@@ -1,6 +1,7 @@
 # Auteur:
+#   Willem Vanbaelinghem--Dezitter - TPA
 #   Alex François - TPA
-# création -> 10v/06/2025
+# création -> 09/06/2025
 # dernière MAJ -> 10/06/2025
 
 import sys
@@ -28,9 +29,9 @@ class CaseMagasin(QGraphicsRectItem):
         else:
             lettre_colonne = 'A' + chr(ord('A') + (colonne - 26))
         print(f"Case sélectionnée: Ligne {self.ligne+1}, Colonne {lettre_colonne}")
-        msg= QMessageBox()
-        msg.setText(f"Case sélectionnée: Ligne {self.ligne+1}, Colonne {lettre_colonne}")
-        msg.exec()
+        # msg= QMessageBox()
+        # msg.setText(f"Case sélectionnée: Ligne {self.ligne+1}, Colonne {lettre_colonne}")
+        # msg.exec()
         super().mousePressEvent(event)
 
 class SceneMagasin(QGraphicsScene):
