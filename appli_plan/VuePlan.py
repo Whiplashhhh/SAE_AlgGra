@@ -2,7 +2,7 @@
 #   Willem Vanbaelinghem--Dezitter - TPA
 #   Alex François - TPA
 # création -> 09/06/2025
-# dernière MAJ -> 10/06/2025
+# dernière MAJ -> 11/06/2025
 
 import sys
 import json
@@ -59,7 +59,7 @@ class SceneMagasin(QGraphicsScene):
 
         larg = pixmap.width()
         haut = pixmap.height()
-        self.setSceneRect(0, 0, larg, haut)
+        self.setSceneRect(-30, -30, larg+60, haut+60)
 
         # Quadrillage
         self.lignes, self.colonnes = 52, 52
@@ -132,15 +132,30 @@ class MagasinView(QGraphicsView):
         super().__init__()
         self.scene_magasin = SceneMagasin()
         self.setScene(self.scene_magasin)
+        
+        # fenêtre redimensionnable
+        self.setMinimumSize(950, 700)
+        
+        # fit automatique
+        self.fitInView(self.scene_magasin.sceneRect(), Qt.AspectRatioMode.KeepAspectRatio)
 
         # Facteur de zoom
         self.echelle = 1.0
+        self.first_fit = True  # pour ne pas recalculer en boucle
+
+    def resizeEvent(self, event):
+        '''Ajuste la scène quand la fenêtre est redimensionnée (mais seulement au départ)'''
+        if self.first_fit:
+            self.fitInView(self.scene_magasin.sceneRect(), Qt.AspectRatioMode.KeepAspectRatio)
+            self.echelle = self.transform().m11()  # on récupère le facteur appliqué
+            self.first_fit = False
+        super().resizeEvent(event)
         
     
     def wheelEvent(self, event):
         '''Gestion du zoom avec la molette de la souris'''
-        zoom_in = 1.25
-        zoom_out = 0.8
+        zoom_in = 1.1
+        zoom_out = 0.9
         
         if event.angleDelta().y() > 0:  # Molette vers le haut 
             self.echelle *= zoom_in
