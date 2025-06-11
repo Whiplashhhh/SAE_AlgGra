@@ -55,4 +55,4 @@ class MagasinModel:
         if produits:
             print(f"Produits dans la case {colonne_str}{ligne} ({self.positions_categories.get(f'{colonne_str},{ligne}')}): {', '.join(produits)}")
         else:
-            print(f"Aucun produit dans la case {colonne_str}{ligne}")
+            print(f"Aucun produit dans la case ({colonne_str},{ligne})")

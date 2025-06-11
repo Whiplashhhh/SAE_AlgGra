@@ -35,7 +35,11 @@ class CaseMagasin(QGraphicsRectItem):
         # msg= QMessageBox()
         # msg.setText(f"Case sélectionnée: Ligne {self.ligne+1}, Colonne {lettre_colonne}")
         # msg.exec()
-        self.modele.afficher_produits_case(lettre_colonne, self.ligne + 1)
+        # Vérifie si la case est utile avant d'afficher les produits
+        if self.modele.is_case_util(self.ligne, self.colonne):
+            self.modele.afficher_produits_case(lettre_colonne, self.ligne + 1)
+        else:
+            print(f"Case inutile : pas de produit à afficher.")
         super().mousePressEvent(event)
 
 class SceneMagasin(QGraphicsScene):
@@ -127,7 +131,7 @@ class SceneMagasin(QGraphicsScene):
 class MagasinVue(QGraphicsView):
     def __init__(self):
         super().__init__()
-        self.modele = MagasinModel("./graphe.json", "./positions_categories.json", "./test_produits_par_categories.json")
+        self.modele = MagasinModel("./graphe.json", "./test_positions_categories.json", "./test_produits_par_categories.json")
 
         self.scene_magasin = SceneMagasin(self.modele)
         self.setScene(self.scene_magasin)
