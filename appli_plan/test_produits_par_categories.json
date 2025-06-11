@@ -1,0 +1,18 @@
+{
+  "Légumes": [
+    "Carottes",
+    "Petits pois",
+    "Aubergine",
+    "Salade"
+  ],
+  "Fruits": [
+    "Pommes",
+    "Poires",
+    "Bananes"
+  ],
+  "Viandes": [
+    "Poulet",
+    "Steak",
+    "Jambon"
+  ]
+}

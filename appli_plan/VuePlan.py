@@ -3,7 +3,7 @@
 #   Alex François - TPA
 # création -> 09/06/2025
 # dernière MAJ -> 10/06/2025
-
+from test_modele import MagasinModele
 import sys
 from PyQt6.QtWidgets import QApplication, \
                             QGraphicsScene, QGraphicsView, \
@@ -13,10 +13,11 @@ from PyQt6.QtGui import QGuiApplication,QBrush, QPixmap, QFont
 from PyQt6.QtCore import Qt
 
 class CaseMagasin(QGraphicsRectItem):
-    def __init__(self, x, y, width, height,ligne,colonne):
+    def __init__(self, x, y, width, height,ligne,colonne,modele):
         super().__init__(x, y, width, height)
         self.ligne = ligne
         self.colonne = colonne
+        self.modele = modele
         self.setBrush(QBrush(Qt.GlobalColor.transparent))
         self.setPen(Qt.GlobalColor.gray)
         self.setFlag(QGraphicsRectItem.GraphicsItemFlag.ItemIsSelectable)
@@ -32,13 +33,15 @@ class CaseMagasin(QGraphicsRectItem):
         # msg= QMessageBox()
         # msg.setText(f"Case sélectionnée: Ligne {self.ligne+1}, Colonne {lettre_colonne}")
         # msg.exec()
+        self.modele.afficher_produits_case(lettre_colonne, self.ligne + 1)
         super().mousePressEvent(event)
 
 class SceneMagasin(QGraphicsScene):
     '''Class précisant les éléments de la scène graphique'''
-    def __init__(self):
+    def __init__(self,modele):
         '''Constructeur de la classe'''
         super().__init__()
+        self.modele = modele
 
         # dimension du plan
         largeur_plan = 1000
@@ -64,7 +67,7 @@ class SceneMagasin(QGraphicsScene):
         self.rectangles = []  # Liste pour stocker les rectangles du quadrillage
         for i in range(self.lignes):
             for j in range(self.colonnes):
-                rect = CaseMagasin(j*self.tailleX, i*self.tailleY, self.tailleX, self.tailleY, i, j)
+                rect = CaseMagasin(j*self.tailleX, i*self.tailleY, self.tailleX, self.tailleY, i, j,self.modele)
                 rect.setBrush(QBrush(Qt.GlobalColor.transparent))
                 rect.setPen(Qt.GlobalColor.gray)
                 rect.setFlag(QGraphicsRectItem.GraphicsItemFlag.ItemIsSelectable)
@@ -118,7 +121,9 @@ class SceneMagasin(QGraphicsScene):
 class MagasinView(QGraphicsView):
     def __init__(self):
         super().__init__()
-        self.scene_magasin = SceneMagasin()
+        self.modele = MagasinModele("./test_positions_categories.json", "./test_produits_par_categories.json")
+
+        self.scene_magasin = SceneMagasin(self.modele)
         self.setScene(self.scene_magasin)
 
         # Facteur de zoom
