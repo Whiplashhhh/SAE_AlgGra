@@ -1,16 +1,19 @@
-# Auteur:
+# Auteurs:
 #   Willem Vanbaelinghem--Dezitter - TPA
 #   Alex François - TPA
 # création -> 09/06/2025
-# dernière MAJ -> 10/06/2025
-from test_modele import MagasinModele
+# dernière MAJ -> 11/06/2025
+
 import sys
+import json
 from PyQt6.QtWidgets import QApplication, \
                             QGraphicsScene, QGraphicsView, \
                             QGraphicsPixmapItem, QGraphicsRectItem, \
                             QGraphicsTextItem, QMessageBox
-from PyQt6.QtGui import QGuiApplication,QBrush, QPixmap, QFont
+from PyQt6.QtGui import QGuiApplication,QBrush, QPixmap, QFont, QColor
 from PyQt6.QtCore import Qt
+from MagasinModel import MagasinModel
+from test_modele   import MagasinModele
 
 class CaseMagasin(QGraphicsRectItem):
     def __init__(self, x, y, width, height,ligne,colonne,modele):
@@ -42,33 +45,38 @@ class SceneMagasin(QGraphicsScene):
         '''Constructeur de la classe'''
         super().__init__()
         self.modele = modele
-
-        # dimension du plan
-        largeur_plan = 1000
-        hauteur_plan = 1000
+        self.model = MagasinModel("graphe.json")
 
         # Chargement du plan
         pixmap = QPixmap(sys.path[0] + '/plan.jpg')
-        pixmap = pixmap.scaled(largeur_plan, hauteur_plan, Qt.AspectRatioMode.KeepAspectRatio)
+        pixmap = pixmap.scaled(self.model.largeur_plan, self.model.hauteur_plan, Qt.AspectRatioMode.KeepAspectRatio)
 
         self.plan = QGraphicsPixmapItem(pixmap)
         self.addItem(self.plan)
 
         larg = pixmap.width()
         haut = pixmap.height()
-        self.setSceneRect(0, 0, larg, haut)
+        
+        self.tailleX = larg / self.model.colonnes
+        self.tailleY = haut / self.model.lignes
+        
+        self.add_grid_labels(larg, haut, self.model.lignes, self.model.colonnes)
+
+        self.setSceneRect(-30, -30, larg+60, haut+60)
 
         # Quadrillage
-        self.lignes, self.colonnes = 52, 52
-        # Ajouter les labels pour les coordonnées
-        self.add_grid_labels(larg, haut, self.lignes, self.colonnes)
-        self.tailleX = larg / self.colonnes
-        self.tailleY = haut / self.lignes
         self.rectangles = []  # Liste pour stocker les rectangles du quadrillage
-        for i in range(self.lignes):
-            for j in range(self.colonnes):
-                rect = CaseMagasin(j*self.tailleX, i*self.tailleY, self.tailleX, self.tailleY, i, j,self.modele)
-                rect.setBrush(QBrush(Qt.GlobalColor.transparent))
+        for i in range(self.model.lignes):
+            for j in range(self.model.colonnes):
+                x = j * self.tailleX
+                y = i * self.tailleY
+                rect = CaseMagasin(x, y, self.tailleX, self.tailleY, i, j,self.modele)
+                                
+                if not self.model.is_case_util(i, j):
+                    rect.setBrush(QBrush(QColor(50, 50, 50, 100))) #gris transparent (cases inutiles)
+                else:
+                    rect.setBrush(QBrush(Qt.GlobalColor.transparent)) #cases utiles
+                    
                 rect.setPen(Qt.GlobalColor.gray)
                 rect.setFlag(QGraphicsRectItem.GraphicsItemFlag.ItemIsSelectable)
                 self.addItem(rect)
@@ -102,7 +110,7 @@ class SceneMagasin(QGraphicsScene):
             label = QGraphicsTextItem(label_str)
             label.setFont(font)
             x = j * (width / colonnes)
-            y = -15  # au-dessus de la première ligne
+            y = -17  # au-dessus de la première ligne
             label_width = label.boundingRect().width()
             label.setPos(x + (width / colonnes) / 2 - label_width / 2, y)
             self.addItem(label)
@@ -111,29 +119,44 @@ class SceneMagasin(QGraphicsScene):
         for i in range(lignes):
             label = QGraphicsTextItem(str(i + 1))
             label.setFont(font)
-            x = -15  # à gauche de la première colonne
+            x = -20  # à gauche de la première colonne
             y = i * (height / lignes)
             label_height = label.boundingRect().height()
             label.setPos(x, y + (height / lignes) / 2 - label_height / 2)
             self.addItem(label)
             
 
-class MagasinView(QGraphicsView):
+class MagasinVue(QGraphicsView):
     def __init__(self):
         super().__init__()
         self.modele = MagasinModele("./positions_categories.json", "./test_produits_par_categories.json")
 
         self.scene_magasin = SceneMagasin(self.modele)
         self.setScene(self.scene_magasin)
+        
+        # fenêtre redimensionnable
+        self.setMinimumSize(950, 700)
+        
+        # fit automatique
+        self.fitInView(self.scene_magasin.sceneRect(), Qt.AspectRatioMode.KeepAspectRatio)
 
         # Facteur de zoom
         self.echelle = 1.0
+        self.first_fit = True  # pour ne pas recalculer en boucle
+
+    def resizeEvent(self, event):
+        '''Ajuste la scène quand la fenêtre est redimensionnée (mais seulement au départ)'''
+        if self.first_fit:
+            self.fitInView(self.scene_magasin.sceneRect(), Qt.AspectRatioMode.KeepAspectRatio)
+            self.echelle = self.transform().m11()  # on récupère le facteur appliqué
+            self.first_fit = False
+        super().resizeEvent(event)
         
     
     def wheelEvent(self, event):
         '''Gestion du zoom avec la molette de la souris'''
-        zoom_in = 1.25
-        zoom_out = 0.8
+        zoom_in = 1.1
+        zoom_out = 0.9
         
         if event.angleDelta().y() > 0:  # Molette vers le haut 
             self.echelle *= zoom_in
@@ -151,7 +174,7 @@ if __name__ == "__main__":
     # création d'une QApplication
     app = QApplication(sys.argv)
 
-    view = MagasinView()
+    view = MagasinVue()
     view.show()
     
     # Centrer la fenêtre au milieu de l'écran
