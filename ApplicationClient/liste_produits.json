@@ -1,0 +1,1036 @@
+{
+    "poissonerie1": [
+        "Bigorneaux",
+        "Crabe",
+        "Crevettes",
+        "Écrevisses",
+        "Langoustine"
+    ],
+    "poissonerie2": [
+        "Coques",
+        "Coquille St-Jacques",
+        "Huîtres",
+        "Moules"
+    ],
+    "poissonerie3": [
+        "Cabillaud",
+        "Colin",
+        "Hareng fumé",
+        "Maquereaux",
+        "Poissons mer"
+    ],
+    "poissonerie4": [
+        "Poissons eau douce",
+        "Gambas",
+        "Homard"
+    ],
+    "poissonerie5": [
+        "Poissons panés",
+        "Soupe de poissons",
+        "Surimi"
+    ],
+    "poissonerie6": [
+        "Sardines",
+        "Saumon",
+        "Saumon fumé",
+        "Encornet",
+        "Poulpe"
+    ],
+
+    "fromages traditionnels1": [
+        "Comté"
+    ],
+    "fromages traditionnels2": [
+        "Reblochon"
+    ],
+    "fromages traditionnels3": [
+        "Camembert"
+    ],
+    "fromages traditionnels4": [
+        "Roquefort"
+    ],
+    "fromages traditionnels5": [
+        "Tomme de Savoie"
+    ],
+    "fromages traditionnels6": [
+        "Saint-Nectaire"
+    ],
+    "fromages traditionnels7": [
+        "Brie"
+    ],
+
+    "volailles1": [
+        "Aiguillette de poulet",
+        "Cuisses poulet rôti"
+    ],
+    "volailles2": [
+        "Dinde"
+    ],
+    "volailles3": [
+        "Filet de poulet"
+    ],
+    "volailles4": [
+        "Poulet"
+    ],
+    "volailles5": [
+        "Wings poulet",
+        "Pintade"
+    ],
+
+    "boucherie1": [
+        "Agneau",
+        "Aiguillette de boeuf",
+        "Bavette (boeuf)"
+    ],
+    "boucherie2": [
+        "Bifteck de boeuf",
+        "Boeuf (entrecôte)",
+        "Côte de boeuf"
+    ],
+    "boucherie3": [
+        "Escalope de veau",
+        "Filet mignon",
+        "Jarret"
+    ],
+    "boucherie4": [
+        "Langue",
+        "Rôti de veau",
+        "Rôti de porc"
+    ],
+    "boucherie5": [
+        "Rosbeef",
+        "Rumsteck",
+        "Steak haché",
+        "Veau"
+    ],
+
+    "boucherie traditionnelle1": [
+        "Côtes de veau"
+    ],
+    "boucherie traditionnelle2": [
+        "Gigot d’agneau"
+    ],
+    "boucherie traditionnelle3": [
+        "Faux-filet"
+    ],
+    "boucherie traditionnelle4": [
+        "Côtelettes d'agneau"
+    ],
+    "boucherie traditionnelle5": [
+        "Côtes de porc"
+    ],
+    "boucherie traditionnelle6": [
+        "Cervelas"
+    ],
+    "boucherie traditionnelle7": [
+        "Cuisses de poulet"
+    ],
+
+    "rotisserie1": [
+        "Rôti fumé"
+    ],
+    "rotisserie2": [
+        "Paupiettes de veau"
+    ],
+    "rotisserie3": [
+        "Rosbeef"
+    ],
+    "rotisserie4": [
+        "Petit salé"
+    ],
+    "rotisserie5": [
+        "Pigeon"
+    ],
+    "rotisserie6": [
+        "Magret de canard"
+    ],
+    "rotisserie7": [
+        "Caille"
+    ],
+
+    "charcuterie1": [
+        "Andouille",
+        "Andouillette",
+        "Bacon"
+    ],
+    "charcuterie2": [
+        "Cervelas",
+        "Chorizo",
+        "Foie"
+    ],
+    "charcuterie3": [
+        "Foie de volaille",
+        "Jambonneau",
+        "Lard"
+    ],
+    "charcuterie4": [
+        "Lard fumé",
+        "Lardons",
+        "Mortadelle"
+    ],
+    "charcuterie5": [
+        "Mousse de foie",
+        "Museau de porc",
+        "Pâté de campagne"
+    ],
+    "charcuterie6": [
+        "Pâté de foie",
+        "Pâté de tête",
+        "Rillettes"
+    ],
+    "charcuterie7": [
+        "Salami",
+        "Saucisse de Toulouse",
+        "Saucisses"
+    ],
+    "charcuterie8": [
+        "Tripes",
+        "Viande des grisons"
+    ],
+
+    "ultra frais1": [ 
+        "Croque monsieur",
+        "Crudités"
+    ],
+    "ultra frais2": [
+        "Feuilles de brick",
+        "Galettes"
+    ],
+    "ultra frais3": [
+        "Pâtes à tarte"
+    ],
+    "ultra frais4": [
+        "Pâtes fraîches"
+    ],
+    "ultra frais5": [
+        "Piémontaise"
+    ],
+    "ultra frais6": [
+        "Pizzas"
+    ],
+    "ultra frais7": [
+        "Quenelles",
+        "Quiches"
+    ],
+    "ultra frais8": [
+        "Ravioles",
+        "Taboulé"
+    ],
+
+    "fromages1": [
+        "Feta",
+        "Fromage blanc"
+    ],
+    "fromages2": [
+        "Fromages",
+        "Mascarpone"
+    ],
+    "fromages3": [
+        "Mozzarella",
+        "Petit suisse"
+    ],
+    "fromages4": [
+        "Yaourts"
+    ],
+    "fromages5": [
+        "Tzatziki"
+    ],
+
+    "lait": [
+        "Lait"
+    ],
+
+    "oeufs": [
+        "Œufs"
+    ],
+
+    "saucisson1": [
+        "Saucisson à l'ail"
+    ],
+    "saucisson2": [
+        "Saucisson sec"
+    ],
+    "saucisson3": [
+        "Saucisson sec au poivre"
+    ],
+    "saucisson4": [
+        "Saucisson sec au piment"
+    ],
+    "saucisson5": [
+        "Saucisson sec au fromage",
+        "Saucisson sec au vin"
+    ],
+
+    "saurisserie1": [
+        "Anchois",
+        "Bolognaise"
+    ],
+    "saurisserie2": [
+        "Compote",
+        "Gaspacho"
+    ],
+    "saurisserie3": [
+        "Flageolets"
+    ],
+    "saurisserie4": [
+        "Fruits au sirop"
+    ],
+    "saurisserie5": [
+        "Haricots vert"
+    ],
+    "saurisserie6": [
+        "Maïs"
+    ],
+    "saurisserie7": [
+        "Pâté",
+        "Petits pois"
+    ],
+    "saurisserie8": [
+        "Sardine",
+        "Sauce tomate"
+    ],
+    "saurisserie9": [
+        "Soupes",
+        "Thon"
+    ],
+
+    "charcuterie ls1": [
+        "Cordon bleu"
+    ],
+    "charcuterie ls2": [
+        "Crocs jambon"
+    ],
+    "charcuterie ls3": [
+        "Jambon cru"
+    ],
+    "charcuterie ls4": [
+        "Jambon cuit"
+    ],
+    "charcuterie ls5": [
+        "Jambon de volaille"
+    ],
+    "charcuterie ls6": [
+        "Jambon fumé"
+    ],
+    "charcuterie ls7": [
+        "Rosette"
+    ],
+    "charcuterie ls8": [
+        "Mortadelle"
+    ],
+    "charcuterie ls9": [
+        "Pastrami"
+    ],
+
+    "fruit et legume1": [
+        "Ail",
+        "Artichaut",
+        "Asperges",
+        "Aubergine"
+    ],
+
+    "fruit et legume2": [
+        "Avocat",
+        "Betterave",
+        "Blette",
+        "Brocolis"
+    ],
+
+    "fruit et legume3": [
+        "Carotte",
+        "Céleri",
+        "Champignons",
+        "Champignons chinois"
+    ],
+
+    "fruit et legume4": [
+        "Chou",
+        "Chou de Bruxelles",
+        "Choucroute",
+        "Chou-fleur"
+    ],
+
+    "fruit et legume5": [
+        "Chou-rouge",
+        "Ciboulette",
+        "Citrouille",
+        "Coeur de palmier"
+    ],
+
+    "fruit et legume6": [
+        "Concombre",
+        "Courge",
+        "Courgette",
+        "Cresson"
+    ],
+
+    "fruit et legume7": [
+        "Échalote",
+        "Endive",
+        "Épinards",
+        "Fenouil"
+    ],
+    "fruit et legume8": [
+        "Flageolets",
+        "Germe de soja",
+        "Gingembre",
+        "Haricot"
+    ],
+    "fruit et legume9": [
+        "Lentilles",
+        "Macédoine",
+        "Mâche",
+        "Maïs"
+    ],
+    "fruit et legume10": [
+        "Menthe",
+        "Navet",
+        "Oignons",
+        "Palmier (coeur)"
+    ],
+    "fruit et legume11": [
+        "Persil",
+        "Petits pois",
+        "Poireau",
+        "Pois gourmand"
+    ],
+    "fruit et legume12": [
+        "Pois mangetout",
+        "Poivron",
+        "Pomme de terre",
+        "Potimarron"
+    ],
+    "fruit et legume13": [
+        "Pousses de bambou",
+        "Radis",
+        "Radis noir",
+        "Salade laitue"
+    ],
+    "fruit et legume14": [
+        "Salade composée",
+        "Salsifis",
+        "Tomate",
+        "Topinambour"
+    ],
+    "fruit et legume15": [
+        "Abricots",
+        "Ananas",
+        "Bananes",
+        "Brugnon"
+    ],
+    "fruit et legume16": [
+        "Cassis",
+        "Cerises",
+        "Citrons",
+        "Clémentine"
+    ],
+    "fruit et legume17": [
+        "Figue",
+        "Fraises",
+        "Framboise",
+        "Fruit de la passion"
+    ],
+    "fruit et legume18": [
+        "Grenade",
+        "Groseille",
+        "Kaki",
+        "Kiwis"
+    ],
+    "fruit et legume19": [
+        "Litchi",
+        "Mandarines",
+        "Mangue",
+        "Melons"
+    ],
+    "fruit et legume20": [
+        "Mirabelle",
+        "Mûre",
+        "Myrtille",
+        "Nectarine",
+        "Oranges",
+        "Pamplemousses"
+ 
+    ],
+
+    "surgelé1": [
+        "Haricots verts surgelés"
+    ],
+    "surgelé2": [
+        "Filets de colin surgelés"
+    ],
+    "surgelé3": [
+        "Poêlée de légumes"
+    ],
+    "surgelé4": [
+        "Frites surgelées"
+    ],
+    "surgelé5": [
+        "Glaces à la vanille"
+    ],
+    "surgelé6": [
+        "Sorbet citron"
+    ],
+    "surgelé7": [
+        "Pizza surgelée"
+    ],
+    "surgelé8": [
+        "Épinards hachés surgelés"
+    ],
+    "surgelé9": [
+        "Fruits rouges surgelés"
+    ],
+    "surgelé10": [
+        "Fruits de mer surgelés"
+    ],
+    "surgelé11": [
+        "Fruits exotiques surgelés"
+    ],
+    "surgelé12": [
+        "Pommes de terre surgelées"
+    ],
+    "surgelé13": [
+        "Légumes asiatiques surgelés"
+    ],
+    "surgelé14": [
+    ],
+
+    "patisserie industrielle et pain1": [
+        "Biscottes",
+        "Brioche"
+    ],
+    "patisserie industrielle et pain2": [
+        "Crêpes",
+        "Croissants"
+    ],
+    "patisserie industrielle et pain3": [
+        "Gaufres",
+        "Madeleines"
+    ],
+    "patisserie industrielle et pain4": [
+        "Muffins",
+        "Pain au chocolat"
+    ],
+    "patisserie industrielle et pain5": [
+        "Pain d'épice",
+        "Pancakes"
+    ],
+    "patisserie industrielle et pain6": [
+        "Pâte à tartiner",
+        "Quatre quart"
+    ],
+
+    "univers animaux1": [
+        "Boites"
+    ],
+    "univers animaux2": [
+        "Foins"
+    ],
+    "univers animaux3": [
+        "Graines"
+    ],
+    "univers animaux4": [
+        "Litière"
+    ],
+    "univers animaux5": [
+        "Pâtées"
+    ],
+    "univers animaux6": [
+        "Sacs de croquettes"
+    ],
+    "univers animaux7": [
+        "Sacs de litière"
+    ],
+    "univers animaux8": [
+        "Sacs de nourriture"
+    ],
+    "univers animaux9": [
+        "Sacs de nourriture pour chien"
+    ],
+    "univers animaux10": [
+        "Sacs de nourriture pour chat"
+    ],
+    "univers animaux11": [
+        "Sacs de nourriture pour rongeurs"
+    ],
+    "univers animaux12": [
+        "Sacs de nourriture pour poissons"
+    ],
+
+    "univers bébé1": [
+        "Couches bébé"
+    ],
+    "univers bébé2": [
+        "Petits pots bébé"
+    ],
+    "univers bébé3": [
+        "Lait infantile"
+    ],
+    "univers bébé4": [
+        "Lingettes bébé"
+    ],
+    "univers bébé5": [
+        "Biberons"
+    ],
+    "univers bébé6": [
+        "Tétines"
+    ],
+    "univers bébé7": [
+        "Petits biscuits bébé"
+    ],
+    "univers bébé8": [
+        "Jus bébé"
+    ],
+    "univers bébé9": [
+        "Compotes bébé"
+    ],
+    "univers bébé10": [
+        "Crème change"
+    ],
+    "univers bébé11": [
+        "Eau nettoyante bébé"
+    ],
+    "univers bébé12": [
+        "Shampooing bébé"
+    ],
+
+    "parfumerie1": [
+        "Après rasage"
+    ],
+    "parfumerie2": [
+        "Brosse à dents"
+    ],
+    "parfumerie3": [
+        "Cire épilation"
+    ],
+    "parfumerie4": [
+        "Coton à démaquiller"
+    ],
+    "parfumerie5": [
+        "Coton tiges"
+    ],
+    "parfumerie6": [
+        "Crème main"
+    ],
+    "parfumerie7": [
+        "Démaquillant"
+    ],
+    "parfumerie8": [
+        "Dentifrice"
+    ],
+    "parfumerie9": [
+        "Déodorant"
+    ],
+    "parfumerie10": [
+        "Fil dentaire"
+    ],
+    "parfumerie11": [
+        "Gel douche"
+    ],
+    "parfumerie12": [
+        "Gel spray"
+    ],
+    "parfumerie13": [
+        "Gel tube"
+    ],
+    "parfumerie14": [
+        "Mousse à raser"
+    ],
+    "parfumerie15": [
+        "Ouate"
+    ],
+    "parfumerie16": [
+        "Pansements"
+    ],
+    "parfumerie17": [
+        "Papier toilette"
+    ],
+    "parfumerie18": [
+        "Produit lentilles"
+    ],
+    "parfumerie19": [
+        "Protection intime"
+    ],
+    "parfumerie20": [
+        "Rasoirs"
+    ],
+
+    "saisonnier1": [
+        "Allume barbecue"
+    ],
+    "saisonnier2": [
+        "Bougies"
+    ],
+    "saisonnier3": [
+        "Insecticide"
+    ],
+    "saisonnier4": [
+        "Sachets glaçon"
+    ],
+    "saisonnier5": [
+        "Charbon de bois"
+    ],
+    "saisonnier6": [
+        "Gobelets jetables"
+    ],
+    "saisonnier7": [
+        "Assiettes jetables"
+    ],
+    "saisonnier8": [
+        "Serviettes en papier"
+    ],
+    "saisonnier9": [
+        "Nappe en papier"
+    ],
+    "saisonnier10": [
+        "Torche citronnelle"
+    ],
+    "saisonnier11": [
+        "Crème solaire"
+    ],
+    "saisonnier12": [
+        "Répulsif moustique"
+    ],
+    "saisonnier13": [
+        "Glacière"
+    ],
+    "saisonnier14": [
+        "Ventilateur"
+    ],
+    "saisonnier15": [
+        "Parasol"
+    ],
+    "saisonnier16": [
+        "Transat"
+    ],
+    "saisonnier17": [
+        "Piscine gonflable"
+    ],
+    "saisonnier18": [
+        "Ballon de plage"
+    ],
+    "saisonnier19": [
+        "Seau à glace"
+    ],
+    "saisonnier20": [
+        "Bâche de protection"
+    ],
+    "saisonnier21": [
+        "Piquet de tente"
+    ],
+    "saisonnier22": [
+        "Lampe torche"
+    ],
+    "saisonnier23": [
+        "Barbecue"
+    ],
+    "saisonnier24": [
+        "Glace pilée"
+    ],
+
+    "bières": [
+        "Bière"
+    ],
+
+    "eaux": [
+        "Eau gazeuse",
+        "Eau minérale"
+    ],
+
+    "alcools": [
+        "Alcools fort"
+    ],
+
+    "cave à vins": [
+        "Vin"
+    ],
+
+    "vins courants": [
+        "Vin rouge",
+        "Vin blanc",
+        "Vin rosé"
+    ],
+    
+    "épicerie1": [
+        "Blé dur"
+    ],
+    "épicerie2": [
+        "Bouillon cube"
+    ],
+    "épicerie3": [
+        "Boulgour"
+    ],
+    "épicerie4": [
+        "Cannelle"
+    ],
+    "épicerie5": [
+        "Chapelure"
+    ],
+    "épicerie6": [
+        "Coriandre"
+    ],
+    "épicerie7": [
+        "Cornichons"
+    ],
+    "épicerie8": [
+        "Croûton"
+    ],
+    "épicerie9": [
+        "Curry"
+    ],
+    "épicerie10": [
+        "Farine"
+    ],
+    "épicerie11": [
+        "Graine de sésame"
+    ],
+    "épicerie12": [
+        "Graine de tournesol"
+    ],
+    "épicerie13": [
+        "Haricots"
+    ],
+    "épicerie14": [
+        "Herbes de Provence"
+    ],
+    "épicerie15": [
+        "Huile"
+    ],
+    "épicerie16": [
+        "Huile d'olive"
+    ],
+    "épicerie17": [
+        "Ketchup"
+    ],
+    "épicerie18": [
+        "Levure"
+    ],
+    "épicerie19": [
+        "Maïzena"
+    ],
+    "épicerie20": [
+        "Mayonnaise"
+    ],
+    "épicerie21": [
+        "Millet"
+    ],
+    "épicerie22": [
+        "Moutarde"
+    ],
+    "épicerie23": [
+        "Olives"
+    ],
+    "épicerie24": [
+        "Orge"
+    ],
+    "épicerie25": [
+        "Origan"
+    ],
+    "épicerie26": [
+        "Oyster sauce"
+    ],
+    "épicerie27": [
+        "Paprika"
+    ],
+    "épicerie28": [
+        "Pâtes"
+    ],
+    "épicerie29": [
+        "Pâtes chinoise"
+    ],
+    "épicerie30": [
+        "Pois cassés"
+    ],
+    "épicerie31": [
+        "Pois chiches"
+    ],
+    "épicerie32": [
+        "Poivre"
+    ],
+    "épicerie33": [
+        "Polenta"
+    ],
+    "épicerie34": [
+        "Purée"
+    ],
+    "épicerie35": [
+        "Quinoa"
+    ],
+    "épicerie36": [
+        "Riz"
+    ],
+    "épicerie37": [
+        "Sarrasin"
+    ],
+    "épicerie38": [
+        "Sauce de soja"
+    ],
+
+    "textile1": [
+        "T-shirt"
+    ],
+    "textile2": [
+        "Chaussettes"
+    ],
+    "textile3": [
+        "Pyjama"
+    ],
+    "textile4": [
+        "Slip"
+    ],
+    "textile5": [
+        "Chemise"
+    ],
+    "textile6": [
+        "Pantalon"
+    ],
+    "textile7": [
+        "Short"
+    ],
+    "textile8": [
+        "Jupe"
+    ],
+    "textile9": [
+        "Robe"
+    ],
+    "textile10": [
+        "Pull"
+    ],
+    "textile11": [
+        "Veste"
+    ],
+    "textile12": [
+        "Manteau"
+    ],
+    "textile13": [
+        "Écharpe"
+    ],
+    "textile14": [
+        "Bonnet"
+    ],
+
+    "jus de fruits1": [
+        "Jus de fruits"
+    ],
+    "jus de fruits2": [
+        "Sirop"
+    ],
+
+    "patisserie et pain ls1": [
+        "Barres chocolatées"
+    ],
+    "patisserie et pain ls2": [
+        "Biscuits"
+    ],
+    "patisserie et pain ls3": [
+        "Biscuits salés"
+    ],
+    "patisserie et pain ls4": [
+        "Blinis mini"
+    ],
+    "patisserie et pain ls5": [
+        "Bretzel",
+        "Cacahuètes"
+    ],
+    "patisserie et pain ls6": [
+        "Chips",
+        "Fruits secs"
+    ],
+    "patisserie et pain ls7": [
+        "Guacamole",
+        "Mini-feuilletés"
+    ],
+    "patisserie et pain ls8": [
+        "Œufs de poisson",
+        "Pistaches"
+    ],
+    "patisserie et pain ls9": [
+        "Tarama",
+        "Tuiles salées"
+    ],
+
+    "entretien1": [
+        "Nettoyant Four"
+    ],
+    "entretien2": [
+        "Nettoyant SDB"
+    ],
+    "entretien3": [
+        "Nettoyant WC"
+    ],
+    "entretien4": [
+        "Nettoyant vitres"
+    ],
+    "entretien5": [
+        "Nettoyant multi-surfaces"
+    ],
+    "entretien6": [
+        "Désinfectant"
+    ],
+    "entretien7": [
+        "Détartrant"
+    ],
+    "entretien8": [
+        "Lingettes nettoyantes"
+    ],
+    "entretien9": [
+        "Spray dépoussiérant"
+    ],
+    "entretien10": [
+        "Déboucheur"
+    ],
+    "entretien11": [
+        "Désodorisant"
+    ],
+    "entretien12": [
+        "Produit sol"
+    ],
+
+    "bazar1": [
+        "Bloc note",
+        "Calculatrice"
+    ],
+    "bazar2": [
+        "Chemises carton",
+        "Ciseau à papier"
+    ],
+    "bazar3": [
+        "Colle",
+        "Crayons à papier"
+    ],
+    "bazar4": [
+        "Crayons de couleur",
+        "Encre Imprimante"
+    ],
+    "bazar5": [
+        "Enveloppes",
+        "Étiquettes"
+    ],
+    "bazar6": [
+        "Ficelle",
+        "Gomme"
+    ],
+    "bazar7": [
+        "Papier à lettre",
+        "Papier cadeau"
+    ],
+    "bazar8": [
+        "Papier imprimante",
+        "Scotch"
+    ],
+    "bazar9": [
+        "Souris de correction",
+        "Stylo bille"
+    ],
+    "bazar10": [
+        "Surligneur",
+        "Taille-crayon"
+    ],
+    "bazar11": [
+        "Timbres",
+        "Trombones"
+    ],
+    
+    "lessive": [
+        "Lessive"
+    ]
+}
