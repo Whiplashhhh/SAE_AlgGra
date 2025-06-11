@@ -56,6 +56,8 @@ class SceneMagasin(QGraphicsScene):
         
         self.tailleX = larg / self.model.colonnes
         self.tailleY = haut / self.model.lignes
+        
+        self.add_grid_labels(larg, haut, self.model.lignes, self.model.colonnes)
 
         self.setSceneRect(-30, -30, larg+60, haut+60)
 
@@ -105,7 +107,7 @@ class SceneMagasin(QGraphicsScene):
             label = QGraphicsTextItem(label_str)
             label.setFont(font)
             x = j * (width / colonnes)
-            y = -15  # au-dessus de la première ligne
+            y = -17  # au-dessus de la première ligne
             label_width = label.boundingRect().width()
             label.setPos(x + (width / colonnes) / 2 - label_width / 2, y)
             self.addItem(label)
@@ -114,7 +116,7 @@ class SceneMagasin(QGraphicsScene):
         for i in range(lignes):
             label = QGraphicsTextItem(str(i + 1))
             label.setFont(font)
-            x = -15  # à gauche de la première colonne
+            x = -20  # à gauche de la première colonne
             y = i * (height / lignes)
             label_height = label.boundingRect().height()
             label.setPos(x, y + (height / lignes) / 2 - label_height / 2)
