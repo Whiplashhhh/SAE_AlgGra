@@ -121,7 +121,7 @@ class SceneMagasin(QGraphicsScene):
 class MagasinView(QGraphicsView):
     def __init__(self):
         super().__init__()
-        self.modele = MagasinModele("./test_positions_categories.json", "./test_produits_par_categories.json")
+        self.modele = MagasinModele("./positions_categories.json", "./test_produits_par_categories.json")
 
         self.scene_magasin = SceneMagasin(self.modele)
         self.setScene(self.scene_magasin)
