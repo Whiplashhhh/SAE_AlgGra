@@ -5,11 +5,12 @@
 # dernière MAJ -> 10/06/2025
 
 import sys
+import json
 from PyQt6.QtWidgets import QApplication, \
                             QGraphicsScene, QGraphicsView, \
                             QGraphicsPixmapItem, QGraphicsRectItem, \
                             QGraphicsTextItem, QMessageBox
-from PyQt6.QtGui import QGuiApplication,QBrush, QPixmap, QFont
+from PyQt6.QtGui import QGuiApplication,QBrush, QPixmap, QFont, QColor
 from PyQt6.QtCore import Qt
 
 class CaseMagasin(QGraphicsRectItem):
@@ -39,6 +40,11 @@ class SceneMagasin(QGraphicsScene):
     def __init__(self):
         '''Constructeur de la classe'''
         super().__init__()
+        
+        #lecture du fichier .json avec cases utiles
+        with open("graphe.json", "r") as f:
+            data = json.load(f)
+        cases_utiles = set(data.keys())
 
         # dimension du plan
         largeur_plan = 1000
@@ -64,8 +70,14 @@ class SceneMagasin(QGraphicsScene):
         self.rectangles = []  # Liste pour stocker les rectangles du quadrillage
         for i in range(self.lignes):
             for j in range(self.colonnes):
+                coord = f"{i+1},{chr(ord('A') + j) if j < 26 else 'A' + chr(ord('A') + j - 26)}"
                 rect = CaseMagasin(j*self.tailleX, i*self.tailleY, self.tailleX, self.tailleY, i, j)
-                rect.setBrush(QBrush(Qt.GlobalColor.transparent))
+                
+                if coord not in cases_utiles:
+                    rect.setBrush(QBrush(QColor(50, 50, 50, 100))) #gris transparent (cases inutiles)
+                else:
+                    rect.setBrush(QBrush(Qt.GlobalColor.transparent))
+                    
                 rect.setPen(Qt.GlobalColor.gray)
                 rect.setFlag(QGraphicsRectItem.GraphicsItemFlag.ItemIsSelectable)
                 self.addItem(rect)
