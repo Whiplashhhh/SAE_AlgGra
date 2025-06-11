@@ -13,7 +13,6 @@ from PyQt6.QtWidgets import QApplication, \
 from PyQt6.QtGui import QGuiApplication,QBrush, QPixmap, QFont, QColor
 from PyQt6.QtCore import Qt
 from MagasinModel import MagasinModel
-from test_modele   import MagasinModele
 
 class CaseMagasin(QGraphicsRectItem):
     def __init__(self, x, y, width, height,ligne,colonne,modele):
@@ -45,11 +44,10 @@ class SceneMagasin(QGraphicsScene):
         '''Constructeur de la classe'''
         super().__init__()
         self.modele = modele
-        self.model = MagasinModel("graphe.json")
 
         # Chargement du plan
         pixmap = QPixmap(sys.path[0] + '/plan.jpg')
-        pixmap = pixmap.scaled(self.model.largeur_plan, self.model.hauteur_plan, Qt.AspectRatioMode.KeepAspectRatio)
+        pixmap = pixmap.scaled(self.modele.largeur_plan, self.modele.hauteur_plan, Qt.AspectRatioMode.KeepAspectRatio)
 
         self.plan = QGraphicsPixmapItem(pixmap)
         self.addItem(self.plan)
@@ -57,22 +55,22 @@ class SceneMagasin(QGraphicsScene):
         larg = pixmap.width()
         haut = pixmap.height()
         
-        self.tailleX = larg / self.model.colonnes
-        self.tailleY = haut / self.model.lignes
+        self.tailleX = larg / self.modele.colonnes
+        self.tailleY = haut / self.modele.lignes
         
-        self.add_grid_labels(larg, haut, self.model.lignes, self.model.colonnes)
+        self.add_grid_labels(larg, haut, self.modele.lignes, self.modele.colonnes)
 
         self.setSceneRect(-30, -30, larg+60, haut+60)
 
         # Quadrillage
         self.rectangles = []  # Liste pour stocker les rectangles du quadrillage
-        for i in range(self.model.lignes):
-            for j in range(self.model.colonnes):
+        for i in range(self.modele.lignes):
+            for j in range(self.modele.colonnes):
                 x = j * self.tailleX
                 y = i * self.tailleY
                 rect = CaseMagasin(x, y, self.tailleX, self.tailleY, i, j,self.modele)
                                 
-                if not self.model.is_case_util(i, j):
+                if not self.modele.is_case_util(i, j):
                     rect.setBrush(QBrush(QColor(50, 50, 50, 100))) #gris transparent (cases inutiles)
                 else:
                     rect.setBrush(QBrush(Qt.GlobalColor.transparent)) #cases utiles
@@ -129,7 +127,7 @@ class SceneMagasin(QGraphicsScene):
 class MagasinVue(QGraphicsView):
     def __init__(self):
         super().__init__()
-        self.modele = MagasinModele("./positions_categories.json", "./test_produits_par_categories.json")
+        self.modele = MagasinModel("./graphe.json", "./positions_categories.json", "./test_produits_par_categories.json")
 
         self.scene_magasin = SceneMagasin(self.modele)
         self.setScene(self.scene_magasin)
