@@ -1,4 +1,4 @@
-# Auteur:
+# Auteurs:
 #   Willem Vanbaelinghem--Dezitter - TPA
 #   Alex François - TPA
 # création -> 09/06/2025
@@ -12,6 +12,7 @@ from PyQt6.QtWidgets import QApplication, \
                             QGraphicsTextItem, QMessageBox
 from PyQt6.QtGui import QGuiApplication,QBrush, QPixmap, QFont, QColor
 from PyQt6.QtCore import Qt
+from MagasinModel import MagasinModel
 
 class CaseMagasin(QGraphicsRectItem):
     def __init__(self, x, y, width, height,ligne,colonne):
@@ -41,42 +42,35 @@ class SceneMagasin(QGraphicsScene):
         '''Constructeur de la classe'''
         super().__init__()
         
-        #lecture du fichier .json avec cases utiles
-        with open("graphe.json", "r") as f:
-            data = json.load(f)
-        cases_utiles = set(data.keys())
-
-        # dimension du plan
-        largeur_plan = 1000
-        hauteur_plan = 1000
+        self.model = MagasinModel("graphe.json")
 
         # Chargement du plan
         pixmap = QPixmap(sys.path[0] + '/plan.jpg')
-        pixmap = pixmap.scaled(largeur_plan, hauteur_plan, Qt.AspectRatioMode.KeepAspectRatio)
+        pixmap = pixmap.scaled(self.model.largeur_plan, self.model.hauteur_plan, Qt.AspectRatioMode.KeepAspectRatio)
 
         self.plan = QGraphicsPixmapItem(pixmap)
         self.addItem(self.plan)
 
         larg = pixmap.width()
         haut = pixmap.height()
+        
+        self.tailleX = larg / self.model.colonnes
+        self.tailleY = haut / self.model.lignes
+
         self.setSceneRect(-30, -30, larg+60, haut+60)
 
         # Quadrillage
-        self.lignes, self.colonnes = 52, 52
-        # Ajouter les labels pour les coordonnées
-        self.add_grid_labels(larg, haut, self.lignes, self.colonnes)
-        self.tailleX = larg / self.colonnes
-        self.tailleY = haut / self.lignes
         self.rectangles = []  # Liste pour stocker les rectangles du quadrillage
-        for i in range(self.lignes):
-            for j in range(self.colonnes):
-                coord = f"{i+1},{chr(ord('A') + j) if j < 26 else 'A' + chr(ord('A') + j - 26)}"
-                rect = CaseMagasin(j*self.tailleX, i*self.tailleY, self.tailleX, self.tailleY, i, j)
-                
-                if coord not in cases_utiles:
+        for i in range(self.model.lignes):
+            for j in range(self.model.colonnes):
+                x = j * self.tailleX
+                y = i * self.tailleY
+                rect = CaseMagasin(x, y, self.tailleX, self.tailleY, i, j)
+                                
+                if not self.model.is_case_util(i, j):
                     rect.setBrush(QBrush(QColor(50, 50, 50, 100))) #gris transparent (cases inutiles)
                 else:
-                    rect.setBrush(QBrush(Qt.GlobalColor.transparent))
+                    rect.setBrush(QBrush(Qt.GlobalColor.transparent)) #cases utiles
                     
                 rect.setPen(Qt.GlobalColor.gray)
                 rect.setFlag(QGraphicsRectItem.GraphicsItemFlag.ItemIsSelectable)
@@ -127,7 +121,7 @@ class SceneMagasin(QGraphicsScene):
             self.addItem(label)
             
 
-class MagasinView(QGraphicsView):
+class MagasinVue(QGraphicsView):
     def __init__(self):
         super().__init__()
         self.scene_magasin = SceneMagasin()
@@ -173,7 +167,7 @@ if __name__ == "__main__":
     # création d'une QApplication
     app = QApplication(sys.argv)
 
-    view = MagasinView()
+    view = MagasinVue()
     view.show()
     
     # Centrer la fenêtre au milieu de l'écran
