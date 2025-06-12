@@ -1,50 +1,56 @@
-import sys
-import json
 from PyQt6.QtWidgets import (
-    QApplication, QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QPushButton,
-    QFileDialog, QLabel, QListWidgetItem, QGraphicsScene, QGraphicsView, QGraphicsPixmapItem
+    QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QPushButton,
+    QLabel, QGraphicsScene, QGraphicsView, QGraphicsPixmapItem, QLineEdit
 )
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import Qt
 
-class MagasinVue2(QWidget):
+class ClientVue(QWidget):
     def __init__(self):
         super().__init__()
 
         self.setWindowTitle("Application 2 - Gestion de courses")
-        self.resize(1200, 800)
+        self.resize(1400, 900)
 
-        # Layout principal horizontal
         layout_principal = QHBoxLayout(self)
 
-        # Zone centrale : le plan
         self.scene = QGraphicsScene()
         self.view = QGraphicsView(self.scene)
-        layout_principal.addWidget(self.view, stretch=3)
-
+        layout_principal.addWidget(self.view, stretch=4)
         self.charger_plan()
 
-        # Zone droite : gestion des catégories & produits
-        zone_droite = QVBoxLayout()
+        zone_milieu = QVBoxLayout()
+        self.label_produits = QLabel("Produits disponibles :")
+        zone_milieu.addWidget(self.label_produits)
 
+        self.search_bar = QLineEdit()
+        self.search_bar.setPlaceholderText("Rechercher un produit...")
+        zone_milieu.addWidget(self.search_bar)
+
+        self.liste_produits = QListWidget()
+        zone_milieu.addWidget(self.liste_produits)
+        layout_principal.addLayout(zone_milieu, stretch=1)
+
+        zone_droite = QVBoxLayout()
         self.label_categorie = QLabel("Catégories :")
         zone_droite.addWidget(self.label_categorie)
-
         self.liste_categories = QListWidget()
         zone_droite.addWidget(self.liste_categories)
 
         self.label_sous_categorie = QLabel("Liste de course :")
         zone_droite.addWidget(self.label_sous_categorie)
-
         self.liste_sous_categories = QListWidget()
         zone_droite.addWidget(self.liste_sous_categories)
 
-        # Boutons
+        # TOTAL ARTICLES placé juste sous la liste de course :
+        self.label_total = QLabel("Total articles : 0")
+        zone_droite.addWidget(self.label_total)
+
         self.bouton_charger = QPushButton("Charger une liste de courses")
         self.bouton_fermer = QPushButton("Effacer la liste de courses")
         self.bouton_sauvegarder = QPushButton("Sauvegarder la liste de courses")
-        self.bouton_cest_parti = QPushButton("C'est parti !")
         self.bouton_aleatoire = QPushButton("Créer une liste aléatoire")
+        self.bouton_cest_parti = QPushButton("C'est parti !")
 
         zone_droite.addWidget(self.bouton_charger)
         zone_droite.addWidget(self.bouton_fermer)
@@ -53,27 +59,11 @@ class MagasinVue2(QWidget):
         zone_droite.addWidget(self.bouton_aleatoire)
 
         layout_principal.addLayout(zone_droite, stretch=1)
-
         self.setLayout(layout_principal)
-
-        # Charge les vraies catégories depuis le fichier JSON directement
-        self.charger_categories_json()
 
     def charger_plan(self):
         pixmap = QPixmap("plan.jpg")
         self.plan = QGraphicsPixmapItem(pixmap)
         self.scene.addItem(self.plan)
         self.view.fitInView(self.scene.sceneRect(), Qt.AspectRatioMode.KeepAspectRatio)
-
-    def charger_categories_json(self):
-        with open("produits_repartis_complet_final.json", "r", encoding="utf-8") as f:
-            self.produits_par_categorie = json.load(f)
-        categories = list(self.produits_par_categorie.keys())
-        self.liste_categories.addItems(categories)
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    fenetre = MagasinVue2()
-    fenetre.show()
-    sys.exit(app.exec())
+        self.view.scale(1.3, 1.3)
