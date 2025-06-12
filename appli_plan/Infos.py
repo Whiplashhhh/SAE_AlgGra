@@ -35,6 +35,11 @@ class Infos(QWidget):
         self.bouton_valider = QPushButton("Créer le projet")
         self.bouton_valider.clicked.connect(self.valider)
         self.layout.addWidget(self.bouton_valider)
+        
+        # Charger un projet existant
+        self.bouton_charger = QPushButton("Charger un projet existant")
+        self.bouton_charger.clicked.connect(self.charger_projet_existant)
+        self.layout.addWidget(self.bouton_charger)
 
         self.setLayout(self.layout)
 
@@ -62,6 +67,7 @@ class Infos(QWidget):
 
         chemin_positions = os.path.join(dossier_projet, "positions_categories.json")
         chemin_produits = os.path.join(dossier_projet, f"produits_par_categories_{nom_projet}.json")
+        chemin_cases = os.path.join(dossier_projet, "graphe.json")
 
         # Copie du fichier positions_categories fixe
         if not os.path.exists(chemin_positions):
@@ -72,6 +78,16 @@ class Infos(QWidget):
                     dst.write(src.read())
             else:
                 QMessageBox.critical(self, "Erreur", "Le fichier positions_categories.json de base est introuvable.")
+                return
+        
+        # Copie du fichier cases_utiles fixe
+        if not os.path.exists(chemin_cases):
+            chemin_cases_source = os.path.join(os.getcwd(), "cases_utiles.json")
+            if os.path.exists(chemin_cases_source):
+                with open(chemin_cases_source, "r", encoding="utf-8") as src, open(chemin_cases, "w", encoding="utf-8") as dst:
+                    dst.write(src.read())
+            else:
+                QMessageBox.critical(self, "Erreur", "Le fichier cases_utiles.json de base est introuvable.")
                 return
 
         # Création du fichier produits_par_categories vide
@@ -87,7 +103,8 @@ class Infos(QWidget):
             "date_creation": self.date_creation,
             "plan_magasin": self.chemin_plan,
             "positions_categories": chemin_positions,
-            "produits_par_categories": chemin_produits
+            "produits_par_categories": chemin_produits,
+            "cases_utiles": chemin_cases
         }
 
         # On sauvegarde le projet.json
@@ -97,10 +114,21 @@ class Infos(QWidget):
 
         self.callback_on_save(infos_projet)
         self.close()
+        
+    def charger_projet_existant(self):
+        fichier, _ = QFileDialog.getOpenFileName(self, "Charger un projet existant", "", "JSON (*.json)")
+        if fichier:
+            try:
+                with open(fichier, "r", encoding="utf-8") as f:
+                    infos_projet = json.load(f)
+                self.callback_on_save(infos_projet)
+                self.close()
+            except Exception as e:
+                QMessageBox.critical(self, "Erreur", f"Impossible de charger le fichier projet.\n{e}")
 
-# === test indépendant (à supprimer après intégration) ===
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    f = Infos(lambda infos: print(infos))
-    f.show()
-    sys.exit(app.exec())
+# # === test indépendant (à supprimer après intégration) ===
+# if __name__ == "__main__":
+#     app = QApplication(sys.argv)
+#     f = Infos(lambda infos: print(infos))
+#     f.show()
+#     sys.exit(app.exec())

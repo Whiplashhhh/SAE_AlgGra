@@ -13,6 +13,7 @@ from PyQt6.QtGui import QGuiApplication, QBrush, QPixmap, QFont, QColor, QPen
 from PyQt6.QtCore import Qt
 from MagasinModel import MagasinModel
 from MagasinControleur import MagasinControleur
+from Infos import Infos
 
 class CaseMagasin(QGraphicsRectItem):
     def __init__(self, x, y, width, height, ligne, colonne, modele, parent_vue):
@@ -53,13 +54,14 @@ class SceneMagasin(QGraphicsScene):
         super().__init__()
         self.modele = modele
         self.vue = vue
-        pixmap = QPixmap(sys.path[0] + '/plan.jpg')
-        pixmap = pixmap.scaled(self.modele.largeur_plan, self.modele.hauteur_plan, Qt.AspectRatioMode.KeepAspectRatio)
+        pixmap = QPixmap(self.modele.infos_projet["plan_magasin"])
+        larg = pixmap.width()
+        haut = pixmap.height()
+        pixmap = pixmap.scaled(larg, haut, Qt.AspectRatioMode.KeepAspectRatio)
         self.plan = QGraphicsPixmapItem(pixmap)
         self.addItem(self.plan)
         
-        larg = pixmap.width()
-        haut = pixmap.height()
+        
         self.tailleX = larg / self.modele.colonnes
         self.tailleY = haut / self.modele.lignes
         self.setSceneRect(-30, -30, larg+60, haut+60)
@@ -124,7 +126,13 @@ class SceneMagasin(QGraphicsScene):
 class MagasinVue(QWidget):
     def __init__(self):
         super().__init__()
-        self.modele = MagasinModel("./graphe.json", "./positions_categories.json", "./produits_par_categories.json")
+        # self.modele = MagasinModel("./graphe.json", "./positions_categories.json", "./produits_par_categories.json")
+        # self.controleur = MagasinControleur(self.modele, self)
+        # self.scene_magasin = SceneMagasin(self.modele, self)
+        self.selection_projet()
+        
+    def setup_ui(self):
+        self.modele = MagasinModel(self.infos_projet)
         self.controleur = MagasinControleur(self.modele, self)
         self.scene_magasin = SceneMagasin(self.modele, self)
         
@@ -267,6 +275,16 @@ class MagasinVue(QWidget):
             if produit in produits_possibles:
                 cases_a_afficher.append(case)
         self.scene_magasin.afficher_croix(cases_a_afficher)
+        
+    def selection_projet(self):
+        # On lance la fenêtre Infos (création OU chargement projet)
+        self.fenetre_infos = Infos(self.initialiser_appli)
+        self.fenetre_infos.show()
+
+    def initialiser_appli(self, infos_projet):
+        # On reçoit le dico infos_projet, on lance tout le reste :
+        self.infos_projet = infos_projet
+        self.setup_ui()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

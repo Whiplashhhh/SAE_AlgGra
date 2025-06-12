@@ -7,19 +7,21 @@
 import json
 
 class MagasinModel:
-    def __init__(self, fichier_cases_utiles, fichier_positions, fichier_produits, largeur_plan=1000, hauteur_plan=1000):
-        self.largeur_plan = largeur_plan
-        self.hauteur_plan = hauteur_plan
+    def __init__(self, infos_projet):
+        self.infos_projet = infos_projet
+        # self.largeur_plan = largeur_plan
+        # self.hauteur_plan = hauteur_plan
         self.lignes = 52
         self.colonnes = 52
-        self.tailleX = largeur_plan / self.colonnes
-        self.tailleY = hauteur_plan / self.lignes
+        # self.tailleX = largeur_plan / self.colonnes
+        # self.tailleY = hauteur_plan / self.lignes
         
-        self.fichier_produits = fichier_produits
+        self.fichier_produits = infos_projet["produits_par_categories"]
 
-        self.cases_utiles = self.load_cases_utiles(fichier_cases_utiles)
-        self.positions_categories = self.charger_positions(fichier_positions)
-        self.produits_par_categories = self.charger_produits(fichier_produits)
+        # self.cases_utiles = self.load_cases_utiles(fichier_cases_utiles)
+        self.positions_categories = self.charger_positions(infos_projet["positions_categories"])
+        self.produits_par_categories = self.charger_produits(infos_projet["produits_par_categories"])
+        self.cases_utiles = self.load_cases_utiles(infos_projet["cases_utiles"])
 
     def load_cases_utiles(self, fichier_cases_utiles):
         try:
