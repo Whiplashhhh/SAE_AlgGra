@@ -1,0 +1,345 @@
+{
+    "Poissonnerie": [
+        "Poissonnerie1",
+        "Poissonnerie2",
+        "Poissonnerie3",
+        "Poissonnerie4",
+        "Poissonnerie5",
+        "Poissonnerie6"
+    ],
+    "Fromages Traditionnels": [
+        "Fromages Traditionnels1",
+        "Fromages Traditionnels2",
+        "Fromages Traditionnels3",
+        "Fromages Traditionnels4",
+        "Fromages Traditionnels5",
+        "Fromages Traditionnels6",
+        "Fromages Traditionnels7"
+    ],
+    "Volailles": [
+        "Volailles1",
+        "Volailles2",
+        "Volailles3",
+        "Volailles4",
+        "Volailles5"
+    ],
+    "Boucherie LS": [
+        "Boucherie LS1",
+        "Boucherie LS2",
+        "Boucherie LS3",
+        "Boucherie LS4",
+        "Boucherie LS5"
+    ],
+    "Boucherie Traditionnelle": [
+        "Boucherie Traditionnelle1",
+        "Boucherie Traditionnelle2",
+        "Boucherie Traditionnelle3",
+        "Boucherie Traditionnelle4",
+        "Boucherie Traditionnelle5",
+        "Boucherie Traditionnelle6"
+    ],
+    "Rotisserie": [
+        "Rotisserie1",
+        "Rotisserie2",
+        "Rotisserie3",
+        "Rotisserie4",
+        "Rotisserie5",
+        "Rotisserie6"
+    ],
+    "Charcuterie": [
+        "Charcuterie1",
+        "Charcuterie2",
+        "Charcuterie3",
+        "Charcuterie4",
+        "Charcuterie5",
+        "Charcuterie6",
+        "Charcuterie7"
+    ],
+    "Ultra frais": [
+        "Ultra frais1",
+        "Ultra frais2",
+        "Ultra frais3",
+        "Ultra frais4",
+        "Ultra frais5",
+        "Ultra frais6",
+        "Ultra frais7",
+        "Ultra frais8"
+    ],
+    "Fromages": [
+        "Fromages1",
+        "Fromages2",
+        "Fromages3",
+        "Fromages4",
+        "Fromages5"
+    ],
+    "Lait": [
+        "Lait"
+    ],
+    "Oeufs": [
+        "Oeufs"
+    ],
+    "Saucissons": [
+        "Saucissons1",
+        "Saucissons2",
+        "Saucissons3",
+        "Saucissons4",
+        "Saucissons5"
+    ],
+    "Saurisseries": [
+        "Saurisseries1",
+        "Saurisseries2",
+        "Saurisseries3",
+        "Saurisseries4",
+        "Saurisseries5",
+        "Saurisseries6",
+        "Saurisseries7",
+        "Saurisseries8",
+        "Saurisseries9"
+    ],
+    "Charcuterie LS": [
+        "Charcuterie LS1",
+        "Charcuterie LS2",
+        "Charcuterie LS3",
+        "Charcuterie LS4",
+        "Charcuterie LS5",
+        "Charcuterie LS6",
+        "Charcuterie LS7",
+        "Charcuterie LS8",
+        "Charcuterie LS9"
+    ],
+    "Fruits Et Légumes": [
+        "Fruits Et Légumes1",
+        "Fruits Et Légumes2",
+        "Fruits Et Légumes3",
+        "Fruits Et Légumes4",
+        "Fruits Et Légumes5",
+        "Fruits Et Légumes6",
+        "Fruits Et Légumes7",
+        "Fruits Et Légumes8",
+        "Fruits Et Légumes9",
+        "Fruits Et Légumes10",
+        "Fruits Et égumes11",
+        "Fruits Et Légumes12",
+        "Fruits Et Légumes13",
+        "Fruits Et Légumes14",
+        "Fruits Et Légumes15",
+        "Fruits Et Légumes16",
+        "Fruits Et Légumes17",
+        "Fruits Et Légumes18",
+        "Fruits Et Légumes19",
+        "Fruits Et Légumes20"
+    ],
+    "Surgelés": [
+        "Surgelés1",
+        "Surgelés2",
+        "Surgelés3",
+        "Surgelés4",
+        "Surgelés5",
+        "Surgelés6",
+        "Surgelés7",
+        "Surgelés8",
+        "Surgelés9",
+        "Surgelés10",
+        "Surgelés11",
+        "Surgelés12",
+        "Surgelés13",
+        "Surgelés14"
+    ],
+    "Patisseries industrielles et pains": [
+        "Patisseries industrielles et pains1",
+        "Patisseries industrielles et pains2",
+        "Patisseries industrielles et pains3",
+        "Patisseries industrielles et pains4",
+        "Patisseries industrielles et pains5",
+        "Patisseries industrielles et pains6"
+    ],
+    "Univers animaux": [
+        "Univers animaux1",
+        "Univers animaux2",
+        "Univers animaux3",
+        "Univers animaux4",
+        "Univers animaux5",
+        "Univers animaux6",
+        "Univers animaux7",
+        "Univers animaux8",
+        "Univers animaux9",
+        "Univers animaux10",
+        "Univers animaux11",
+        "Univers animaux12"
+    ],
+    "Univers bébé": [
+        "Univers bébé1",
+        "Univers bébé2",
+        "Univers bébé3",
+        "Univers bébé4",
+        "Univers bébé5",
+        "Univers bébé6",
+        "Univers bébé7",
+        "Univers bébé8",
+        "Univers bébé9",
+        "Univers bébé10",
+        "Univers bébé11",
+        "Univers bébé12"
+    ],
+    "Parfumerie": [
+        "Parfumerie1",
+        "Parfumerie2",
+        "Parfumerie3",
+        "Parfumerie4",
+        "Parfumerie5",
+        "Parfumerie6",
+        "Parfumerie7",
+        "Parfumerie8",
+        "Parfumerie9",
+        "Parfumerie10",
+        "Parfumerie11",
+        "Parfumerie12",
+        "Parfumerie13",
+        "Parfumerie14",
+        "Parfumerie15",
+        "Parfumerie16",
+        "Parfumerie17",
+        "Parfumerie18",
+        "Parfumerie19",
+        "Parfumerie20"
+    ],
+    "Saisonnier": [
+        "Saisonnier1",
+        "Saisonnier2",
+        "Saisonnier3",
+        "Saisonnier4",
+        "Saisonnier5",
+        "Saisonnier6",
+        "Saisonnier7",
+        "Saisonnier8",
+        "Saisonnier9",
+        "Saisonnier10",
+        "Saisonnier11",
+        "Saisonnier12",
+        "Saisonnier13",
+        "Saisonnier14",
+        "Saisonnier15",
+        "Saisonnier16",
+        "Saisonnier17",
+        "Saisonnier18",
+        "Saisonnier19",
+        "Saisonnier20",
+        "Saisonnier21",
+        "Saisonnier22",
+        "Saisonnier23",
+        "Saisonnier24"
+    ],
+    "Bières": [
+        "Bieres"
+    ],
+    "Eaux": [
+        "Eaux"
+    ],
+    "Alcools": [
+        "Alcools"
+    ],
+    "Cave à vins": [
+        "Cave à vins"
+    ],
+    "Vins courants": [
+        "Vins courants"
+    ],
+    "Epicerie": [
+        "Épicerie1",
+        "Épicerie2",
+        "Epicerie3",
+        "Epicerie4",
+        "Epicerie5",
+        "Epicerie6",
+        "Epicerie7",
+        "Epicerie8",
+        "Epicerie9",
+        "Epicerie10",
+        "Epicerie11",
+        "Epicerie12",
+        "Epicerie13",
+        "Epicerie14",
+        "Epicerie15",
+        "Epicerie16",
+        "Epicerie17",
+        "Epicerie18",
+        "Epicerie19",
+        "Epicerie20",
+        "Epicerie21",
+        "Epicerie22",
+        "Epicerie23",
+        "Epicerie24",
+        "Epicerie25",
+        "Epicerie26",
+        "Epicerie27",
+        "Epicerie28",
+        "Epicerie29",
+        "Epicerie30",
+        "Epicerie31",
+        "Epicerie32",
+        "Epicerie33",
+        "Epicerie34",
+        "Epicerie35",
+        "Epicerie36",
+        "Epicerie37"
+    ],
+    "Textiles": [
+        "Textiles1",
+        "Textiles2",
+        "Textiles3",
+        "Textiles4",
+        "Textiles5",
+        "Textiles6",
+        "Textiles7",
+        "Textiles8",
+        "Textiles9",
+        "Textiles10",
+        "Textiles11",
+        "Textiles12",
+        "Textiles13",
+        "Textiles14"
+    ],
+    "Jus de fruits": [
+        "Jus de fruits1",
+        "Jus de fruits2"
+    ],
+    "Patisseries et pains LS": [
+        "Patisseries et pains LS1",
+        "Patisseries et pains LS2",
+        "Patisseries et pains LS3",
+        "Patisseries et pains LS4",
+        "Patisseries et pains LS5",
+        "Patisseries et pains LS6",
+        "Patisseries et pains LS7"
+    ],
+    "Entretien": [
+        "Entretien1",
+        "Entretien2",
+        "Entretien3",
+        "Entretien4",
+        "Entretien5",
+        "Entretien6",
+        "Entretien7",
+        "Entretien8",
+        "Entretien9",
+        "Entretien10",
+        "Entretien11",
+        "Entretien12"
+    ],
+    "Bazar": [
+        "Bazar1",
+        "Bazar2",
+        "Bazar3",
+        "Bazar4",
+        "Bazar5",
+        "Bazar6",
+        "Bazar7",
+        "Bazar8",
+        "Bazar9",
+        "Bazar10",
+        "Bazar11"
+    ],
+    "Lessive": [
+        "Lessives"
+    ]
+}
