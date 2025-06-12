@@ -1,17 +1,17 @@
 import sys
-import json
 from PyQt6.QtWidgets import QApplication, QGraphicsScene, QGraphicsView, QGraphicsPixmapItem, QGraphicsRectItem, QGraphicsTextItem, QWidget, QLabel, QVBoxLayout, QHBoxLayout, QListWidget, QListWidgetItem, QScrollArea
 from PyQt6.QtGui import QGuiApplication, QBrush, QPixmap, QFont, QColor, QPen
 from PyQt6.QtCore import Qt
 from MagasinModel import MagasinModel
+from MagasinControleur import MagasinControleur
 
 class CaseMagasin(QGraphicsRectItem):
-    def __init__(self, x, y, width, height, ligne, colonne, modele, parent_vue):
+    def __init__(self, x, y, width, height, ligne, colonne, modele, vue):
         super().__init__(x, y, width, height)
         self.ligne = ligne
         self.colonne = colonne
         self.modele = modele
-        self.parent_vue = parent_vue
+        self.vue = vue
         self.setBrush(QBrush(Qt.GlobalColor.transparent))
         self.setPen(Qt.GlobalColor.gray)
         self.setFlag(QGraphicsRectItem.GraphicsItemFlag.ItemIsSelectable)
@@ -32,18 +32,18 @@ class CaseMagasin(QGraphicsRectItem):
                 produits = self.modele.produits_par_categories.get(categorie, [])
             else:
                 produits = []
-            self.parent_vue.afficher_produits_case(produits)
+            self.vue.afficher_produits_case(produits)
         else:
-            self.parent_vue.afficher_produits_case([])
+            self.vue.afficher_produits_case([])
 
         
         super().mousePressEvent(event)
 
 class SceneMagasin(QGraphicsScene):
-    def __init__(self, modele, parent_vue):
+    def __init__(self, modele, vue):
         super().__init__()
         self.modele = modele
-        self.parent_vue = parent_vue
+        self.vue = vue
         pixmap = QPixmap(sys.path[0] + '/plan.jpg')
         pixmap = pixmap.scaled(self.modele.largeur_plan, self.modele.hauteur_plan, Qt.AspectRatioMode.KeepAspectRatio)
         self.plan = QGraphicsPixmapItem(pixmap)
@@ -59,7 +59,7 @@ class SceneMagasin(QGraphicsScene):
             for j in range(self.modele.colonnes):
                 x = j * self.tailleX
                 y = i * self.tailleY
-                rect = CaseMagasin(x, y, self.tailleX, self.tailleY, i, j, self.modele, self.parent_vue)
+                rect = CaseMagasin(x, y, self.tailleX, self.tailleY, i, j, self.modele, self.vue)
                 if not self.modele.is_case_util(i, j):
                     rect.setBrush(QBrush(QColor(50, 50, 50, 100)))
                 self.addItem(rect)
@@ -113,7 +113,7 @@ class MagasinVue(QWidget):
         layout.addWidget(self.view)
         layout.addLayout(layout_droit)
         self.setLayout(layout)
-        self.setWindowTitle("Magasin avec sélection de produits")
+        self.setWindowTitle("MoliShop - Gerant ")
         self.resize(1400, 900)
 
     def afficher_produits_case(self, produits):
