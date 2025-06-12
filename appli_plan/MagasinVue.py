@@ -1,6 +1,6 @@
 import sys
 import json
-from PyQt6.QtWidgets import QApplication, QGraphicsScene, QGraphicsView, QGraphicsPixmapItem, QGraphicsRectItem, QGraphicsTextItem, QWidget, QLabel, QVBoxLayout, QHBoxLayout, QListWidget, QListWidgetItem, QScrollArea
+from PyQt6.QtWidgets import QApplication, QGraphicsScene, QGraphicsView, QGraphicsPixmapItem, QGraphicsRectItem, QWidget, QLabel, QVBoxLayout, QHBoxLayout, QListWidget, QListWidgetItem
 from PyQt6.QtGui import QGuiApplication, QBrush, QPixmap, QFont, QColor, QPen
 from PyQt6.QtCore import Qt
 from MagasinModel import MagasinModel
@@ -25,7 +25,7 @@ class CaseMagasin(QGraphicsRectItem):
             lettre_colonne = 'A' + chr(ord('A') + (colonne - 26))
         
         key = f"{self.ligne+1},{lettre_colonne}"
-
+        
         if self.modele.is_case_util(self.ligne, self.colonne):
             categorie = self.modele.positions_categories.get(key, None)
             if categorie:
@@ -35,7 +35,6 @@ class CaseMagasin(QGraphicsRectItem):
             self.parent_vue.afficher_produits_case(produits)
         else:
             self.parent_vue.afficher_produits_case([])
-
         
         super().mousePressEvent(event)
 
@@ -65,26 +64,27 @@ class SceneMagasin(QGraphicsScene):
                 self.addItem(rect)
                 self.rectangles.append(rect)
         
-        self.croix = None
-        
-    def afficher_croix(self, case_str):
-        if hasattr(self, 'croix1') and self.croix1:
-            self.removeItem(self.croix1)
-        if hasattr(self, 'croix2') and self.croix2:
-            self.removeItem(self.croix2)
+        self.croix_items = []
 
-        ligne, colonne = case_str.split(',')
-        ligne = int(ligne)-1
-        if len(colonne) == 1:
-            colonne_num = ord(colonne)-ord('A')
-        else:
-            colonne_num = 26 + ord(colonne[1]) - ord('A')
+    def afficher_croix(self, liste_cases):
+        for croix in self.croix_items:
+            self.removeItem(croix)
+        self.croix_items.clear()
 
-        x = colonne_num * self.tailleX
-        y = ligne * self.tailleY
+        for case_str in liste_cases:
+            ligne, colonne = case_str.split(',')
+            ligne = int(ligne)-1
+            if len(colonne) == 1:
+                colonne_num = ord(colonne)-ord('A')
+            else:
+                colonne_num = 26 + ord(colonne[1]) - ord('A')
 
-        self.croix1 = self.addLine(x, y, x+self.tailleX, y+self.tailleY, QPen(Qt.GlobalColor.red, 2))
-        self.croix2 = self.addLine(x, y+self.tailleY, x+self.tailleX, y, QPen(Qt.GlobalColor.red, 2))
+            x = colonne_num * self.tailleX
+            y = ligne * self.tailleY
+
+            croix1 = self.addLine(x, y, x+self.tailleX, y+self.tailleY, QPen(Qt.GlobalColor.red, 2))
+            croix2 = self.addLine(x, y+self.tailleY, x+self.tailleX, y, QPen(Qt.GlobalColor.red, 2))
+            self.croix_items.extend([croix1, croix2])
 
 class MagasinVue(QWidget):
     def __init__(self):
@@ -96,25 +96,32 @@ class MagasinVue(QWidget):
         self.liste_produits_case = QListWidget()
         self.liste_produits_case.setFixedWidth(200)
         
-        self.liste_globale = QListWidget()
-        for categorie in self.modele.produits_par_categories:
-            for produit in self.modele.produits_par_categories[categorie]:
-                item = QListWidgetItem(produit)
-                self.liste_globale.addItem(item)
-        self.liste_globale.itemClicked.connect(self.afficher_produit_selectionne)
-        
+        self.liste_categories = QListWidget()
+        self.liste_produits_global = QListWidget()
+
+        with open("./catégorie.json", "r", encoding="utf-8") as f:
+            self.mapping_familles = json.load(f)
+
+        for famille in sorted(self.mapping_familles.keys()):
+            item = QListWidgetItem(famille)
+            self.liste_categories.addItem(item)
+        self.liste_categories.itemClicked.connect(self.afficher_produits_de_famille)
+        self.liste_produits_global.itemClicked.connect(self.afficher_produit_selectionne)
+
         layout_droit = QVBoxLayout()
         layout_droit.addWidget(QLabel("Produits de la case"))
         layout_droit.addWidget(self.liste_produits_case)
-        layout_droit.addWidget(QLabel("Tous les produits"))
-        layout_droit.addWidget(self.liste_globale)
+        layout_droit.addWidget(QLabel("Grandes Catégories"))
+        layout_droit.addWidget(self.liste_categories)
+        layout_droit.addWidget(QLabel("Produits de la catégorie"))
+        layout_droit.addWidget(self.liste_produits_global)
         
         layout = QHBoxLayout()
         layout.addWidget(self.view)
         layout.addLayout(layout_droit)
         self.setLayout(layout)
-        self.setWindowTitle("Magasin avec sélection de produits")
-        self.resize(1400, 900)
+        self.setWindowTitle("Magasin avec grandes catégories")
+        self.resize(1500, 900)
 
     def afficher_produits_case(self, produits):
         self.liste_produits_case.clear()
@@ -124,13 +131,23 @@ class MagasinVue(QWidget):
         else:
             self.liste_produits_case.addItem("Aucun produit")
 
+    def afficher_produits_de_famille(self, item):
+        self.liste_produits_global.clear()
+        famille = item.text()
+        produits = []
+        for sous_categorie in self.mapping_familles[famille]:
+            produits += self.modele.produits_par_categories.get(sous_categorie, [])
+        for prod in sorted(produits):
+            self.liste_produits_global.addItem(prod)
+
     def afficher_produit_selectionne(self, item):
         produit = item.text()
+        cases_a_afficher = []
         for case, categorie in self.modele.positions_categories.items():
             produits_possibles = self.modele.produits_par_categories.get(categorie, [])
             if produit in produits_possibles:
-                self.scene_magasin.afficher_croix(case)
-                break
+                cases_a_afficher.append(case)
+        self.scene_magasin.afficher_croix(cases_a_afficher)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
