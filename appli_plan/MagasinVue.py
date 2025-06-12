@@ -35,9 +35,13 @@ class CaseMagasin(QGraphicsRectItem):
         # msg= QMessageBox()
         # msg.setText(f"Case sélectionnée: Ligne {self.ligne+1}, Colonne {lettre_colonne}")
         # msg.exec()
+
+        key = f"{self.ligne+1},{lettre_colonne}"
+        print(f"Case sélectionnée: Ligne {self.ligne+1}, Colonne {lettre_colonne} (clé: {key})")
+        
         # Vérifie si la case est utile avant d'afficher les produits
         if self.modele.is_case_util(self.ligne, self.colonne):
-            self.modele.afficher_produits_case(lettre_colonne, self.ligne + 1)
+            self.modele.afficher_produits_case(key)  # Utilise la clé correcte
         else:
             print(f"Case inutile : pas de produit à afficher.")
         super().mousePressEvent(event)

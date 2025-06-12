@@ -25,7 +25,9 @@ class MagasinModel:
     def charger_positions(self, fichier_positions):
         try:
             with open(fichier_positions, "r", encoding="utf-8") as fichier:
-                return json.load(fichier)
+                data = json.load(fichier)
+                print(f"Positions chargées : {data}")  # Debug
+                return data
         except FileNotFoundError:
             print(f"Erreur : fichier {fichier_positions} introuvable.")
             return {}
@@ -50,9 +52,10 @@ class MagasinModel:
         else:
             return []
 
-    def afficher_produits_case(self, colonne_str, ligne):
-        produits = self.get_produits_dans_case(colonne_str, ligne)
-        if produits:
-            print(f"Produits dans la case {colonne_str}{ligne} ({self.positions_categories.get(f'{colonne_str},{ligne}')}): {', '.join(produits)}")
+    def afficher_produits_case(self, key):
+        if key in self.positions_categories:
+            categorie = self.positions_categories[key]
+            produits = self.produits_par_categories.get(categorie, [])
+            print(f"Produits dans la case {key} : {produits}")
         else:
-            print(f"Aucun produit dans la case ({colonne_str},{ligne})")
+            print(f"Aucun produit dans la case {key}")
