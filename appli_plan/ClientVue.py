@@ -33,7 +33,7 @@ class MagasinVue2(QWidget):
         self.liste_categories = QListWidget()
         zone_droite.addWidget(self.liste_categories)
 
-        self.label_sous_categorie = QLabel("Sous-catégorie / Produits :")
+        self.label_sous_categorie = QLabel("Liste de course :")
         zone_droite.addWidget(self.label_sous_categorie)
 
         self.liste_sous_categories = QListWidget()
@@ -41,7 +41,7 @@ class MagasinVue2(QWidget):
 
         # Boutons
         self.bouton_charger = QPushButton("Charger une liste de courses")
-        self.bouton_fermer = QPushButton("Fermer la liste de courses")
+        self.bouton_fermer = QPushButton("Effacer la liste de courses")
         self.bouton_sauvegarder = QPushButton("Sauvegarder la liste de courses")
         self.bouton_cest_parti = QPushButton("C'est parti !")
         self.bouton_aleatoire = QPushButton("Créer une liste aléatoire")
