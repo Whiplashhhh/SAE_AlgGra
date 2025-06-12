@@ -1,61 +1,34 @@
 import json
 
 class MagasinModel:
-    def __init__(self, fichier_cases_utiles, fichier_positions, fichier_produits, largeur_plan=1000, hauteur_plan=1000):
-        self.largeur_plan = largeur_plan
-        self.hauteur_plan = hauteur_plan
-        self.lignes = 52
-        self.colonnes = 52
-        self.tailleX = largeur_plan / self.colonnes
-        self.tailleY = hauteur_plan / self.lignes
+    def __init__(self, fichier_positions, fichier_produits):
+        self.positions_categories = self.charger_json(fichier_positions)
+        self.produits_par_categories = self.charger_json(fichier_produits)
+        self.fichier_produits = fichier_produits
 
-        self.cases_utiles = self.load_cases_utiles(fichier_cases_utiles)
-        self.positions_categories = self.charger_positions(fichier_positions)
-        self.produits_par_categories = self.charger_produits(fichier_produits)
-
-    def load_cases_utiles(self, fichier_cases_utiles):
+    def charger_json(self, chemin):
         try:
-            with open(fichier_cases_utiles, "r", encoding="utf-8") as f:
-                data = json.load(f)
-            return set(data.keys())
-        except FileNotFoundError:
-            print(f"Erreur : fichier {fichier_cases_utiles} introuvable.")
-            return set()
-
-    def charger_positions(self, fichier_positions):
-        try:
-            with open(fichier_positions, "r", encoding="utf-8") as fichier:
-                data = json.load(fichier)
-                
-                return data
-        except FileNotFoundError:
-            print(f"Erreur : fichier {fichier_positions} introuvable.")
+            with open(chemin, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except:
             return {}
 
-    def charger_produits(self, fichier_produits):
-        try:
-            with open(fichier_produits, "r", encoding="utf-8") as fichier:
-                return json.load(fichier)
-        except FileNotFoundError:
-            print(f"Erreur : fichier {fichier_produits} introuvable.")
-            return {}
+    def sauvegarder(self):
+        with open(self.fichier_produits, 'w', encoding='utf-8') as f:
+            json.dump(self.produits_par_categories, f, indent=4, ensure_ascii=False)
 
-    def is_case_util(self, ligne, colonne):
-        coord = f"{ligne+1},{chr(ord('A') + colonne) if colonne < 26 else 'A' + chr(ord('A') + (colonne - 26))}"
-        return coord in self.cases_utiles
+    def get_categorie(self, coord):
+        return self.positions_categories.get(coord, None)
 
-    def get_produits_dans_case(self, colonne_str, ligne):
-        cle = f"{colonne_str},{ligne}"
-        categorie = self.positions_categories.get(cle, None)
-        if categorie:
-            return self.produits_par_categories.get(categorie, [])
-        else:
-            return []
+    def get_produits(self, categorie):
+        return self.produits_par_categories.get(categorie, [])
 
-    def afficher_produits_case(self, key):
-        if key in self.positions_categories:
-            categorie = self.positions_categories[key]
-            produits = self.produits_par_categories.get(categorie, [])
-            print(f"Produits dans la case {key} : {produits}")
-        else:
-            print(f"Aucun produit dans la case {key}")
+    def ajouter_produit(self, categorie, produit):
+        self.produits_par_categories.setdefault(categorie, [])
+        if produit not in self.produits_par_categories[categorie]:
+            self.produits_par_categories[categorie].append(produit)
+
+    def supprimer_produit(self, categorie, produit):
+        if categorie in self.produits_par_categories:
+            if produit in self.produits_par_categories[categorie]:
+                self.produits_par_categories[categorie].remove(produit)
