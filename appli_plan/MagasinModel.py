@@ -1,3 +1,9 @@
+# Auteurs:
+#   Willem VANBAELINGHEM--DEZITTER - TPA
+#   Alex FRANCOIS - TPA
+# date création: 010/06/2025
+# dernière maj: 12/06/2025
+
 import json
 
 class MagasinModel:
@@ -8,6 +14,8 @@ class MagasinModel:
         self.colonnes = 52
         self.tailleX = largeur_plan / self.colonnes
         self.tailleY = hauteur_plan / self.lignes
+        
+        self.fichier_produits = fichier_produits
 
         self.cases_utiles = self.load_cases_utiles(fichier_cases_utiles)
         self.positions_categories = self.charger_positions(fichier_positions)
@@ -59,3 +67,23 @@ class MagasinModel:
             print(f"Produits dans la case {key} : {produits}")
         else:
             print(f"Aucun produit dans la case {key}")
+            
+    def ajouter_produit(self, categorie, produit):
+        if categorie in self.produits_par_categories:
+            if produit not in self.produits_par_categories[categorie]:
+                self.produits_par_categories[categorie].append(produit)
+        else:
+            self.produits_par_categories[categorie] = [produit]
+
+    def supprimer_produit(self, categorie, produit):
+        if categorie in self.produits_par_categories:
+            if produit in self.produits_par_categories[categorie]:
+                self.produits_par_categories[categorie].remove(produit)
+
+    def sauvegarder(self):
+        try:
+            with open(self.fichier_produits, "w", encoding="utf-8") as fichier:
+                json.dump(self.produits_par_categories, fichier, indent=4, ensure_ascii=False)
+            print("Sauvegarde effectuée.")
+        except Exception as e:
+            print(f"Erreur lors de la sauvegarde : {e}")

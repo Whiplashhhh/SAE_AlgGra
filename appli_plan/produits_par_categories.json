@@ -36,7 +36,6 @@
         "Encornet",
         "Poulpe"
     ],
-
     "Fromages Traditionnels1": [
         "Comté"
     ],
@@ -58,7 +57,6 @@
     "Fromages Traditionnels7": [
         "Brie"
     ],
-
     "Volailles1": [
         "Aiguillette de poulet",
         "Cuisses poulet rôti"
@@ -76,7 +74,6 @@
         "Wings poulet",
         "Pintade"
     ],
-
     "Boucherie LS1": [
         "Agneau",
         "Aiguillette de boeuf",
@@ -103,7 +100,6 @@
         "Steak haché",
         "Veau"
     ],
-
     "Boucherie Traditionnelle1": [
         "Côtes de veau"
     ],
@@ -122,7 +118,6 @@
     "Boucherie Traditionnelle6": [
         "Cervelas"
     ],
-
     "Rotisserie1": [
         "Rôti fumé"
     ],
@@ -141,7 +136,6 @@
     "Rotisserie6": [
         "Magret de canard"
     ],
-
     "Charcuterie1": [
         "Andouille",
         "Andouillette",
@@ -177,8 +171,7 @@
         "Saucisse de Toulouse",
         "Saucisses"
     ],
-
-    "Ultra frais1": [ 
+    "Ultra frais1": [
         "Croque monsieur",
         "Crudités"
     ],
@@ -206,7 +199,6 @@
         "Ravioles",
         "Taboulé"
     ],
-
     "Fromages1": [
         "Feta",
         "Fromage blanc"
@@ -225,15 +217,12 @@
     "Fromages5": [
         "Tzatziki"
     ],
-
     "Lait": [
         "Lait"
     ],
-
     "Oeufs": [
         "Œufs"
     ],
-
     "Saucissons1": [
         "Saucisson à l'ail"
     ],
@@ -250,7 +239,6 @@
         "Saucisson sec au fromage",
         "Saucisson sec au vin"
     ],
-
     "Saurisseries1": [
         "Anchois",
         "Bolognaise"
@@ -283,7 +271,6 @@
         "Soupes",
         "Thon"
     ],
-
     "Charcuterie LS1": [
         "Cordon bleu"
     ],
@@ -311,49 +298,42 @@
     "Charcuterie LS9": [
         "Pastrami"
     ],
-
     "Fruits et Légumes1": [
         "Ail",
         "Artichaut",
         "Asperges",
         "Aubergine"
     ],
-
     "Fruits et Légumes2": [
         "Avocat",
         "Betterave",
         "Blette",
         "Brocolis"
     ],
-
     "Fruits et Légumes3": [
         "Carotte",
         "Céleri",
         "Champignons",
         "Champignons chinois"
     ],
-
     "Fruits et Légumes4": [
         "Chou",
         "Chou de Bruxelles",
         "Choucroute",
         "Chou-fleur"
     ],
-
     "Fruits et Légumes5": [
         "Chou-rouge",
         "Ciboulette",
         "Citrouille",
         "Coeur de palmier"
     ],
-
     "Fruits et Légumes6": [
         "Concombre",
         "Courge",
         "Courgette",
         "Cresson"
     ],
-
     "Fruits et Légumes7": [
         "Échalote",
         "Endive",
@@ -439,9 +419,7 @@
         "Nectarine",
         "Oranges",
         "Pamplemousses"
- 
     ],
-
     "Surgelés1": [
         "Haricots verts surgelés"
     ],
@@ -484,7 +462,6 @@
     "Surgelés14": [
         "Glaces au chocolat"
     ],
-
     "Patisseries industrielles et pains1": [
         "Biscottes",
         "Brioche"
@@ -509,7 +486,6 @@
         "Pâte à tartiner",
         "Quatre quart"
     ],
-
     "Univers animaux1": [
         "Boites"
     ],
@@ -546,7 +522,6 @@
     "Univers animaux12": [
         "Sacs de nourriture pour poissons"
     ],
-
     "Univers bébé1": [
         "Couches bébé"
     ],
@@ -583,7 +558,6 @@
     "Univers bébé12": [
         "Shampooing bébé"
     ],
-
     "Parfumerie1": [
         "Après rasage"
     ],
@@ -644,7 +618,6 @@
     "Parfumerie20": [
         "Rasoirs"
     ],
-
     "Saisonnier1": [
         "Allume barbecue"
     ],
@@ -717,30 +690,24 @@
     "Saisonnier24": [
         "Glace pilée"
     ],
-
     "Bieres": [
         "Bière"
     ],
-
     "Eaux": [
         "Eau gazeuse",
         "Eau minérale"
     ],
-
     "Alcools": [
         "Alcools fort"
     ],
-
     "Cave à vins": [
         "Vin"
     ],
-
     "Vins courants": [
         "Vin rouge",
         "Vin blanc",
         "Vin rosé"
     ],
-    
     "Epicerie1": [
         "Blé dur"
     ],
@@ -852,7 +819,6 @@
     "Epicerie37": [
         "Sarrasin"
     ],
-
     "Textiles1": [
         "T-shirt"
     ],
@@ -895,14 +861,12 @@
     "Textiles14": [
         "Bonnet"
     ],
-
     "Jus de fruits1": [
         "Jus de fruits"
     ],
     "Jus de fruits2": [
         "Sirop"
     ],
-
     "Patisseries et pains LS1": [
         "Barres chocolatées"
     ],
@@ -927,7 +891,6 @@
         "Guacamole",
         "Mini-feuilletés"
     ],
-
     "Entretien1": [
         "Nettoyant Four"
     ],
@@ -964,7 +927,6 @@
     "Entretien12": [
         "Produit sol"
     ],
-
     "Bazar1": [
         "Bloc note",
         "Calculatrice"
@@ -1009,7 +971,6 @@
         "Timbres",
         "Trombones"
     ],
-    
     "Lessives": [
         "Lessive"
     ]
