@@ -26,7 +26,7 @@ class MagasinModel:
         try:
             with open(fichier_positions, "r", encoding="utf-8") as fichier:
                 data = json.load(fichier)
-                print(f"Positions chargées : {data}")  # Debug
+                
                 return data
         except FileNotFoundError:
             print(f"Erreur : fichier {fichier_positions} introuvable.")

@@ -31,13 +31,13 @@ class CaseMagasin(QGraphicsRectItem):
             lettre_colonne = chr(ord('A') + colonne)
         else:
             lettre_colonne = 'A' + chr(ord('A') + (colonne - 26))
-        print(f"Case sélectionnée: Ligne {self.ligne+1}, Colonne {lettre_colonne}")
+        #print(f"Case sélectionnée: Ligne {self.ligne+1}, Colonne {lettre_colonne}")
         # msg= QMessageBox()
         # msg.setText(f"Case sélectionnée: Ligne {self.ligne+1}, Colonne {lettre_colonne}")
         # msg.exec()
 
         key = f"{self.ligne+1},{lettre_colonne}"
-        print(f"Case sélectionnée: Ligne {self.ligne+1}, Colonne {lettre_colonne} (clé: {key})")
+        #print(f"Case sélectionnée: Ligne {self.ligne+1}, Colonne {lettre_colonne} (clé: {key})")
         
         # Vérifie si la case est utile avant d'afficher les produits
         if self.modele.is_case_util(self.ligne, self.colonne):
@@ -135,7 +135,7 @@ class SceneMagasin(QGraphicsScene):
 class MagasinVue(QGraphicsView):
     def __init__(self):
         super().__init__()
-        self.modele = MagasinModel("./graphe.json", "./test_positions_categories.json", "./test_produits_par_categories.json")
+        self.modele = MagasinModel("./graphe.json", "./positions_categories.json", "./produits_par_categories.json")
 
         self.scene_magasin = SceneMagasin(self.modele)
         self.setScene(self.scene_magasin)
