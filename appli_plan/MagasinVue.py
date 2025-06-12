@@ -76,22 +76,24 @@ class SceneMagasin(QGraphicsScene):
         
         #affichage des coordonnées
         font = QFont()
-        font.setBold(True)
+        font.setBold(False)
+        font.setPointSize(8)
+
         for j in range(self.modele.colonnes):
-            x = j * self.tailleX + self.tailleX / 2
+            x = j * self.tailleX + self.tailleX / 2 - 9  # léger décalage pour mieux centrer horizontalement
             texte = chr(ord('A') + j) if j < 26 else 'A' + chr(ord('A') + (j-26))
             item = QGraphicsTextItem(texte)
             item.setFont(font)
-            item.setPos(x, -25)
+            item.setPos(x, -20)
             self.addItem(item)
 
         for i in range(self.modele.lignes):
-            y = i * self.tailleY + self.tailleY / 2
+            y = i * self.tailleY + self.tailleY / 2 - 10  # léger décalage pour mieux centrer verticalement
             item = QGraphicsTextItem(str(i+1))
             item.setFont(font)
-            item.setPos(-25, y)
+            item.setPos(-20, y)
             self.addItem(item)
-        
+                
     def afficher_croix(self, case_str):
         if hasattr(self, 'croix1') and self.croix1:
             self.removeItem(self.croix1)
@@ -134,11 +136,9 @@ class MagasinVue(QWidget):
         self.input_produit = QLineEdit()
         self.bouton_ajout = QPushButton("Ajouter produit")
         self.bouton_supprimer = QPushButton("Supprimer produit")
-        self.bouton_sauvegarde = QPushButton("Sauvegarder")
         
         self.bouton_ajout.clicked.connect(self.ajouter_produit_case)
         self.bouton_supprimer.clicked.connect(self.supprimer_produit_case)
-        self.bouton_sauvegarde.clicked.connect(self.controleur.sauvegarder)
         
         layout_droit = QVBoxLayout()
         layout_droit.addWidget(self.label_coordonnees)
@@ -148,7 +148,6 @@ class MagasinVue(QWidget):
         layout_droit.addWidget(self.input_produit)
         layout_droit.addWidget(self.bouton_ajout)
         layout_droit.addWidget(self.bouton_supprimer)
-        layout_droit.addWidget(self.bouton_sauvegarde)
         layout_droit.addWidget(QLabel("Tous les produits"))
         layout_droit.addWidget(self.liste_globale)
         
@@ -190,6 +189,7 @@ class MagasinVue(QWidget):
             nouveau_produit = self.input_produit.text()
             if nouveau_produit:
                 self.controleur.ajouter_produit(self.categorie_actuelle, nouveau_produit)
+                self.controleur.sauvegarder()
                 self.case_cliquee(*self.parse_case(self.case_actuelle))
                 self.input_produit.clear()
 
@@ -198,8 +198,10 @@ class MagasinVue(QWidget):
             item = self.liste_produits_case.currentItem()
             if item:
                 produit = item.text()
-                self.controleur.supprimer_produit(self.categorie_actuelle, produit)
-                self.case_cliquee(*self.parse_case(self.case_actuelle))
+                if produit != "Aucun produit":  # on ne supprime pas le placeholder
+                    self.controleur.supprimer_produit(self.categorie_actuelle, produit)
+                    self.controleur.sauvegarder()
+                    self.case_cliquee(*self.parse_case(self.case_actuelle))
 
     def parse_case(self, case_str):
         ligne, colonne = case_str.split(',')
