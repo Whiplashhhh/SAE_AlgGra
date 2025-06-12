@@ -164,10 +164,11 @@ class MagasinVue(QWidget):
 
         # Partie boutons et LineEdit à droite de la liste des produits de la case
         buttons_layout = QVBoxLayout()
+        buttons_layout.addWidget(self.bouton_supprimer)
         buttons_layout.addWidget(QLabel("Ajouter un produit :"))
         buttons_layout.addWidget(self.input_produit)
         buttons_layout.addWidget(self.bouton_ajout)
-        buttons_layout.addWidget(self.bouton_supprimer)
+        
         case_layout.addLayout(buttons_layout)
 
         layout_droit.addLayout(case_layout)

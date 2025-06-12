@@ -7,6 +7,7 @@ class MagasinControleur:
     def __init__(self, modele, vue):
         self.modele = modele
         self.vue = vue
+        self.infos_projet = None
 
     def get_produits_de_case(self, ligne, colonne):
         if colonne < 26:
@@ -30,3 +31,7 @@ class MagasinControleur:
 
     def sauvegarder(self):
         self.modele.sauvegarder()
+        if self.infos_projet:
+            import json
+            with open(f"{self.infos_projet['nom_projet']}.json", "w", encoding="utf-8") as f:
+                json.dump(self.infos_projet, f, indent=4, ensure_ascii=False)
