@@ -12,6 +12,7 @@ class ClientControleur:
 
         self.tous_les_produits = self.modele.get_tous_les_produits()
 
+        #Connections 
         self.vue.liste_categories.addItems(self.modele.get_categories())
         self.vue.liste_categories.itemClicked.connect(self.afficher_produits)
         self.vue.liste_produits.itemClicked.connect(self.ajouter_produit)
@@ -25,31 +26,36 @@ class ClientControleur:
 
         self.vue.showMaximized()
 
+    #Lorsqu'on clique sur une catégorie ça affiche ses produits
     def afficher_produits(self, item):
         self.categorie_actuelle = item.text()
         produits = self.modele.get_produits_categorie(self.categorie_actuelle)
         self.update_liste_produits(produits)
 
+    #Met à jour la liste des produits affichée
     def update_liste_produits(self, produits):
         self.vue.liste_produits.clear()
         for produit in produits:
             widget_item = QListWidgetItem(f"+ {produit}")
-            widget_item.setData(Qt.ItemDataRole.UserRole, produit)
+            widget_item.setData(Qt.ItemDataRole.UserRole, produit)#Stock des données supplémentaires cachées dans widget_item
             self.vue.liste_produits.addItem(widget_item)
 
+    #Quand on clique dans la barre de recherche cela filtre les produits
     def filtrer_produits(self):
         texte = self.vue.search_bar.text().lower().strip()
         if not texte:
             self.vue.liste_produits.clear()
             return
-        suggestions = [p for p in self.tous_les_produits if texte in p.lower()]
+        suggestions = [p for p in self.tous_les_produits if texte in p.lower()]#Retourne une liste de tous les produits qui contiennent texte dans leur nom
         self.update_liste_produits(suggestions)
 
+    #Ajout des produits dans la liste 
     def ajouter_produit(self, item):
         produit = item.data(Qt.ItemDataRole.UserRole)
         self.modele.ajouter_produit(produit)
         self.mettre_a_jour_affichage_liste()
 
+    #Retire des produits de la liste 
     def retirer_produit(self, item):
         texte = item.text()
         produit = texte[2:].split(" (")[0]
@@ -68,21 +74,25 @@ class ClientControleur:
         self.vue.liste_sous_categories.clear()
         self.vue.label_total.setText("Total articles : 0")
 
+    #Sauvegarde la liste
     def sauvegarder(self):
         fileName, _ = QFileDialog.getSaveFileName(self.vue, "Sauvegarder", "", "JSON Files (*.json)")
         if fileName:
             self.modele.sauvegarder_liste(fileName)
 
+    #Charge une liste
     def charger(self):
         fileName, _ = QFileDialog.getOpenFileName(self.vue, "Charger", "", "JSON Files (*.json)")
         if fileName:
             self.modele.charger_liste(fileName)
             self.mettre_a_jour_affichage_liste()
 
+    #Génère une liste aléatoire
     def generer_aleatoire(self):
         self.modele.generer_liste_aleatoire()
         self.mettre_a_jour_affichage_liste()
 
+    #Lancement du chemin et calcul le chemin optimal
     def lancer_chemin(self):
         liste_courses = list(self.modele.get_liste_courses().keys())
         if not liste_courses:
