@@ -1,79 +1,149 @@
 import json
+import numpy as np
+import os
+from collections import deque
 
 class ClientModel:
     def __init__(self):
-        with open("position_produit.json", encoding="utf-8-sig") as f:
-            self.produit_position = json.load(f)
-        with open("graphe.json", encoding="utf-8-sig") as f:
-            self.graphe = json.load(f)
-        with open("sous_categorie_produits.json", encoding="utf-8-sig") as f:
-            self.souscat_produits = json.load(f)
-        # Liste des caisses
+        self.charger_fichiers()
+        self.liste_courses = {}
         self.caisses = [
             "44,AH", "44,AF", "44,AE", "44,AC", "44,AB",
             "44,Z", "44,Y", "44,W", "44,T", "44,S", "44,Q", "44,P", "44,O", "44,M"
         ]
-    
+
+    def charger_fichiers(self):
+        base_path = os.path.dirname(__file__)
+        with open(os.path.join(base_path, "produits_par_sous_categorie.json"), "r", encoding="utf-8-sig") as f:
+            self.sous_categories = json.load(f)
+        with open(os.path.join(base_path, "sous_categorie_produits.json"), "r", encoding="utf-8-sig") as f:
+            self.produits_par_sous_categorie = json.load(f)
+        with open(os.path.join(base_path, "position_produit.json"), "r", encoding="utf-8-sig") as f:
+            self.positions = json.load(f)
+        with open(os.path.join(base_path, "graphe.json"), "r", encoding="utf-8-sig") as f:
+            self.graphe = json.load(f)
+        self.categories = list(self.sous_categories.keys())
+
+    def get_categories(self):
+        return self.categories
+
+    def get_produits_categorie(self, categorie):
+        produits = []
+        sous_cats = self.sous_categories.get(categorie, [])
+        for sous_cat in sous_cats:
+            produits.extend(self.produits_par_sous_categorie.get(sous_cat, []))
+        return sorted(set(produits))
+
+    def get_tous_les_produits(self):
+        tous = []
+        for cat in self.categories:
+            tous.extend(self.get_produits_categorie(cat))
+        return sorted(set(tous))
+
+    def ajouter_produit(self, produit):
+        if produit in self.liste_courses:
+            self.liste_courses[produit] += 1
+        else:
+            self.liste_courses[produit] = 1
+
+    def retirer_produit(self, produit):
+        if produit in self.liste_courses:
+            self.liste_courses[produit] -= 1
+            if self.liste_courses[produit] <= 0:
+                del self.liste_courses[produit]
+
+    def effacer_liste(self):
+        self.liste_courses = {}
+
+    def sauvegarder_liste(self, fichier):
+        with open(fichier, "w", encoding="utf-8") as f:
+            json.dump(self.liste_courses, f, indent=4)
+
+    def charger_liste(self, fichier):
+        with open(fichier, "r", encoding="utf-8") as f:
+            self.liste_courses = json.load(f)
+
+    def generer_liste_aleatoire(self):
+        tout = self.get_tous_les_produits()
+        tout = np.array(tout)
+        n = min(10, len(tout))
+        indices = np.random.choice(len(tout), size=n, replace=False)
+        self.liste_courses = {}
+        for i in indices:
+            produit = tout[i]
+            self.liste_courses[produit] = 1
+
+    def get_liste_courses(self):
+        return self.liste_courses
+
+    # ------------------ Chemin avec passage par sous-catégorie/positions ------------------
+
     def get_coords_produits(self, produits):
-        # Renvoie la liste des coordonnées sous forme de string "ligne,colonne"
-        res = []
-        for prod in produits:
-            for souscat, plist in self.souscat_produits.items():
-                if prod in plist:
-                    for k, v in self.produit_position.items():
-                        if v == souscat:
-                            res.append(k)
+        coords = []
+        produits_trouves = []
+        for produit in produits:
+            sous_cat_trouvee = None
+            for sous_cat, liste_produits in self.produits_par_sous_categorie.items():
+                if produit == sous_cat or produit in liste_produits:
+                    sous_cat_trouvee = sous_cat
+                    break
+            if sous_cat_trouvee:
+                for coord, sous_cat in self.positions.items():
+                    if coord not in self.graphe:
+                        continue  # <-- on ne garde QUE les cases accessibles
+                    if isinstance(sous_cat, list):
+                        if sous_cat_trouvee in sous_cat:
+                            coords.append(coord)
+                            produits_trouves.append(produit)
                             break
-        return res
+                    else:
+                        if sous_cat_trouvee == sous_cat:
+                            coords.append(coord)
+                            produits_trouves.append(produit)
+                            break
+        print(f"Produits demandés : {produits}")
+        print(f"Produits réellement placés (trouvés dans le magasin ET accessibles) : {produits_trouves}")
+        print(f"Coordonnées à visiter : {coords}")
+        return coords
 
-    def get_chemin(self, depart, produits, dijkstra):
-        # Récupère les coordonnées des produits à prendre
-        points_a_visiter = self.get_coords_produits(produits)
-        if not points_a_visiter:
-            return []
 
-        chemin_total = [depart]
-        courant = depart
-        a_faire = points_a_visiter.copy()
-        
-        # On fait un algo nearest neighbor (on va tjrs au plus proche suivant)
-        while a_faire:
-            best_dist = float('inf')
-            best_pt = None
-            best_chemin = []
-            for pt in a_faire:
-                res = dijkstra(self._format_graphe(), courant)
-                if pt in res and res[pt][0] < best_dist:
-                    best_dist = res[pt][0]
-                    best_pt = pt
-                    best_chemin = res[pt][1]
-            if not best_pt:
-                break  # Impossible d’aller à la suite
-            # On ajoute le chemin (sans dupliquer la position courante)
-            chemin_total += best_chemin[1:]
-            courant = best_pt
-            a_faire.remove(best_pt)
-        
-        # À la fin, va à la caisse la plus proche
-        best_caisse = None
-        best_dist = float('inf')
-        best_chemin = []
-        res = dijkstra(self._format_graphe(), courant)
-        for caisse in self.caisses:
-            if caisse in res and res[caisse][0] < best_dist:
-                best_dist = res[caisse][0]
-                best_caisse = caisse
-                best_chemin = res[caisse][1]
-        if best_caisse:
-            chemin_total += best_chemin[1:]
-        return chemin_total
+    def dijkstra(self, depart):
+        file = deque([[depart]])
+        dico = {depart: (0, [depart])}
+        while file:
+            chemin = file.popleft()
+            sommet = chemin[-1]
+            voisins = self.graphe.get(sommet, [])
+            for voisin in voisins:
+                nouvelle_distance = dico[sommet][0] + 1
+                nouveau_chemin = chemin + [voisin]
+                if voisin not in dico or nouvelle_distance < dico[voisin][0]:
+                    dico[voisin] = (nouvelle_distance, nouveau_chemin)
+                    file.append(nouveau_chemin)
+        return dico
 
-    def _format_graphe(self):
-        # Formate le graphe json en format { case: {voisin: 1, ...}, ... }
-        graphe = {}
-        for case, voisins in self.graphe.items():
-            if isinstance(voisins, list):
-                graphe[case] = {v: 1 for v in voisins}
-            else:
-                graphe[case] = {v: 1 for v in voisins.keys()}
-        return graphe
+    def get_chemin(self, depart, produits):
+        coords_produits = self.get_coords_produits(produits)
+        if not coords_produits:
+            return [depart]
+        chemin_final = []
+        position_actuelle = depart
+        produits_restants = coords_produits.copy()
+        while produits_restants:
+            dico_chemin = self.dijkstra(position_actuelle)
+            accessibles = [c for c in produits_restants if c in dico_chemin]
+            if not accessibles:
+                break
+            prochain = min(accessibles, key=lambda c: dico_chemin[c][0])
+            chemin_final += dico_chemin[prochain][1][1:]
+            position_actuelle = prochain
+            produits_restants.remove(prochain)
+
+        # Aller à la caisse la plus proche atteignable
+        dico_caisse = self.dijkstra(position_actuelle)
+        caisses_accessibles = [c for c in self.caisses if c in dico_caisse]
+        if caisses_accessibles:
+            caisse_plus_proche = min(caisses_accessibles, key=lambda c: dico_caisse[c][0])
+            chemin_final += dico_caisse[caisse_plus_proche][1][1:]
+
+        return [depart] + chemin_final

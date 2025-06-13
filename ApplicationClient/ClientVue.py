@@ -1,101 +1,157 @@
-import sys
-import json
 from PyQt6.QtWidgets import (
-    QApplication, QWidget, QVBoxLayout, QHBoxLayout, QListWidget,
-    QPushButton, QListWidgetItem, QGraphicsScene, QGraphicsView,
-    QGraphicsPixmapItem, QGraphicsLineItem, QGraphicsRectItem, QGraphicsPolygonItem, QMessageBox,
-    QSpacerItem, QSizePolicy
+    QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QPushButton,
+    QLabel, QGraphicsScene, QGraphicsView, QGraphicsPixmapItem, 
+    QGraphicsLineItem, QLineEdit, QGraphicsPolygonItem
 )
-from PyQt6.QtGui import QPixmap, QPen, QColor, QPolygonF
-from PyQt6.QtCore import Qt, QPointF
-from PyQt6.QtCore import QTimer
-
-from ClientModel import ClientModel
-from algo_chemin import dijkstra
+from PyQt6.QtGui import QPixmap, QPen, QPolygonF
+from PyQt6.QtCore import Qt, QPointF, QTimer
 
 class ClientVue(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("SAE Supérette - Parcours optimal")
-        self.resize(1500, 900)
-        self.model = ClientModel()
+
+        self.setWindowTitle("Application 2 - Gestion de courses")
+        self.resize(1400, 900)
 
         layout_principal = QHBoxLayout(self)
 
-        # Partie plan
         self.scene = QGraphicsScene()
         self.view = QGraphicsView(self.scene)
-        layout_principal.addWidget(self.view, stretch=3)
+        layout_principal.addWidget(self.view, stretch=4)
+
+        self.nb_colonnes = 52  
+        self.nb_lignes = 50
+
         self.plan_pixmap = QPixmap("plan.jpg")
-        self.plan_item = QGraphicsPixmapItem(self.plan_pixmap)
-        self.scene.addItem(self.plan_item)
-        self.scene.setSceneRect(self.plan_item.boundingRect())
-        self.view.setSceneRect(self.plan_item.boundingRect())
-        self.view.fitInView(self.plan_item, Qt.AspectRatioMode.KeepAspectRatio)
+        self.plan_width = self.plan_pixmap.width()
+        self.plan_height = self.plan_pixmap.height()
+        self.taille_case_x = self.plan_width / self.nb_colonnes
+        self.taille_case_y = self.plan_height / self.nb_lignes
 
-        with open("graphe.json", encoding="utf-8") as f:
-            self.graphe = json.load(f)
-            self.cases_utiles = list(self.graphe.keys())
+        self.charger_plan()
 
-        self.nb_colonnes = 52
-        self.nb_lignes = 52
-        self.taille_case_x = self.plan_pixmap.width() / self.nb_colonnes
-        self.taille_case_y = self.plan_pixmap.height() / self.nb_lignes
-        self.draw_grille()
+        zone_milieu = QVBoxLayout()
+        self.label_produits = QLabel("Produits disponibles :")
+        zone_milieu.addWidget(self.label_produits)
 
-        # Partie droite (liste + bouton)
-        zone_droite = QVBoxLayout()
+        self.search_bar = QLineEdit()
+        self.search_bar.setPlaceholderText("Rechercher un produit...")
+        zone_milieu.addWidget(self.search_bar)
+
         self.liste_produits = QListWidget()
-        self.liste_produits.setSelectionMode(QListWidget.SelectionMode.MultiSelection)
-        self.charge_tous_les_produits()
-        zone_droite.addWidget(self.liste_produits, stretch=1)
-        zone_droite.addSpacerItem(QSpacerItem(10, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding))
-        self.bouton_chemin = QPushButton("Calculer mon chemin !")
-        self.bouton_chemin.setMinimumHeight(50)
-        self.bouton_chemin.setStyleSheet("font-size:20px; font-weight:bold;")
-        zone_droite.addWidget(self.bouton_chemin)
+        zone_milieu.addWidget(self.liste_produits)
+        layout_principal.addLayout(zone_milieu, stretch=1)
+
+        zone_droite = QVBoxLayout()
+        self.label_categorie = QLabel("Catégories :")
+        zone_droite.addWidget(self.label_categorie)
+        self.liste_categories = QListWidget()
+        zone_droite.addWidget(self.liste_categories)
+
+        self.label_sous_categorie = QLabel("Liste de course :")
+        zone_droite.addWidget(self.label_sous_categorie)
+        self.liste_sous_categories = QListWidget()
+        zone_droite.addWidget(self.liste_sous_categories)
+
+        self.label_total = QLabel("Total articles : 0")
+        zone_droite.addWidget(self.label_total)
+
+        self.bouton_charger = QPushButton("Charger une liste de courses")
+        self.bouton_fermer = QPushButton("Effacer la liste de courses")
+        self.bouton_sauvegarder = QPushButton("Sauvegarder la liste de courses")
+        self.bouton_cest_parti = QPushButton("C'est parti !")
+        self.bouton_aleatoire = QPushButton("Créer une liste aléatoire")
+
+        zone_droite.addWidget(self.bouton_charger)
+        zone_droite.addWidget(self.bouton_fermer)
+        zone_droite.addWidget(self.bouton_sauvegarder)
+        zone_droite.addWidget(self.bouton_cest_parti)
+        zone_droite.addWidget(self.bouton_aleatoire)
+
         layout_principal.addLayout(zone_droite, stretch=1)
         self.setLayout(layout_principal)
 
-        self.bouton_chemin.clicked.connect(self.calculer_chemin)
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.tracer_prochain_segment)
+        self.index_segment = 0
+        self.points = []
 
-    def charge_tous_les_produits(self):
-        produits = []
-        for _, prods in self.model.souscat_produits.items():
-            produits += prods
-        produits = sorted(set(produits))
-        for prod in produits:
-            item = QListWidgetItem(prod)
-            self.liste_produits.addItem(item)
+    def charger_plan(self):
+        self.scene.clear()
+        self.plan = QGraphicsPixmapItem(self.plan_pixmap)
+        self.scene.addItem(self.plan)
+        self.view.setSceneRect(self.plan.boundingRect())
+        self.view.fitInView(self.plan.boundingRect(), Qt.AspectRatioMode.KeepAspectRatio)
 
-    def draw_grille(self):
-        for coord in self.cases_utiles:
-            lig, col = coord.split(",")
-            lig_idx = int(lig) - 1
-            col_idx = self.col_to_int(col)
-            x = col_idx * self.taille_case_x
-            y = lig_idx * self.taille_case_y
-            rect = QGraphicsRectItem(x, y, self.taille_case_x, self.taille_case_y)
-            rect.setPen(QPen(Qt.GlobalColor.gray, 1))
-            rect.setBrush(QColor(255, 255, 255, 60))
-            rect.setZValue(1)
-            self.scene.addItem(rect)
+        for i in range(self.nb_lignes + 1):
+            y = i * self.taille_case_y
+            line = QGraphicsLineItem(0, y, self.plan_width, y)
+            line.setPen(QPen(Qt.GlobalColor.gray, 1))
+            self.scene.addItem(line)
+        for j in range(self.nb_colonnes + 1):
+            x = j * self.taille_case_x
+            line = QGraphicsLineItem(x, 0, x, self.plan_height)
+            line.setPen(QPen(Qt.GlobalColor.gray, 1))
+            self.scene.addItem(line)
 
-    def calculer_chemin(self):
-        selection = self.liste_produits.selectedItems()
-        if not selection:
-            QMessageBox.warning(self, "Oups", "Sélectionne au moins un produit !")
+    def afficher_chemin(self, chemin, coords_produits=None):
+        self.timer.stop()
+        self.index_segment = 0
+        self.points = []
+        self.lignes_points = []
+
+        self.charger_plan()  
+
+        self.pen = QPen(Qt.GlobalColor.red)
+        self.pen.setWidth(6)
+
+        for coord in chemin:
+            try:
+                lig, col = coord.split(",")
+                ligne = int(lig)
+                col_idx = self.col_to_int(col)
+                x = col_idx * self.taille_case_x + self.taille_case_x / 2
+                if ligne >= 28:
+                    y = (ligne - 3) * self.taille_case_y + self.taille_case_y / 2
+                else:
+                    y = (ligne - 1) * self.taille_case_y + self.taille_case_y / 2
+                self.points.append(QPointF(x, y))
+                self.lignes_points.append(ligne)
+            except Exception as e:
+                print(f"Erreur coordonnée : {coord} --> {e}")
+
+        if len(self.points) > 1:
+            self.timer.start(100)
+
+        # Afficher les flèches sur les cases des produits à ramasser
+        if coords_produits:
+            for coord in coords_produits:
+                try:
+                    lig, col = coord.split(",")
+                    ligne = int(lig)
+                    col_idx = self.col_to_int(col)
+                    x = col_idx * self.taille_case_x + self.taille_case_x / 2
+                    if ligne >= 28:
+                        y = (ligne - 3) * self.taille_case_y + self.taille_case_y / 2
+                    else:
+                        y = (ligne - 1) * self.taille_case_y + self.taille_case_y / 2
+                    self.draw_arrow(QPointF(x, y))
+                except Exception as e:
+                    print(f"Erreur flèche coordonnée {coord} : {e}")
+
+
+    def tracer_prochain_segment(self):
+        if self.index_segment >= len(self.points) - 1:
+            self.timer.stop()
             return
-        liste_produits = [item.text() for item in selection]
-        try:
-            chemin = self.model.get_chemin("48,AL", liste_produits, dijkstra)
-            if not chemin:
-                QMessageBox.warning(self, "Erreur", "Aucun chemin trouvé !")
-                return
-            self.draw_path(chemin, liste_produits)
-        except Exception as e:
-            QMessageBox.critical(self, "Erreur", f"Erreur lors du calcul du chemin : {e}")
-            
+        p1 = self.points[self.index_segment]
+        p2 = self.points[self.index_segment + 1]
+        line = QGraphicsLineItem(p1.x(), p1.y(), p2.x(), p2.y())
+        line.setPen(self.pen)
+        line.setZValue(10)
+        self.scene.addItem(line)
+        self.index_segment += 1
+
     def draw_arrow(self, point):
         taille = min(self.taille_case_x, self.taille_case_y) / 2.2
         dx = taille / 2
@@ -105,65 +161,12 @@ class ClientVue(QWidget):
             QPointF(point.x(), point.y() + taille/2)
         ])
         arrow_item = QGraphicsPolygonItem(arrow)
-        arrow_item.setBrush(Qt.GlobalColor.red)
+        arrow_item.setBrush(Qt.GlobalColor.green)
         arrow_item.setPen(QPen(Qt.GlobalColor.black, 1))
-        arrow_item.setZValue(10)
+        arrow_item.setZValue(20)
         self.scene.addItem(arrow_item)
 
-    def draw_path(self, chemin, liste_produits):
-        # Supprime anciens traits et flèches
-        for item in self.scene.items():
-            if isinstance(item, (QGraphicsLineItem, QGraphicsPolygonItem)):
-                self.scene.removeItem(item)
-        # On pré-calcule les points à dessiner
-        points = []
-        for coord in chemin:
-            try:
-                ligne, colonne = coord.split(",")
-                ligne = int(ligne)
-                col_idx = self.col_to_int(colonne)
-                x = (col_idx + 0.5) * self.taille_case_x
-                y = (ligne - 0.5) * self.taille_case_y
-                points.append(QPointF(x, y))
-            except Exception as e:
-                print(f"Erreur coordonnée : {coord} --> {e}")
-        if len(points) < 2:
-            return
 
-        # --- Animation : dessin segment par segment avec QTimer
-        self._animation_index = 0
-        self._animation_points = points
-        self._animation_pen = QPen(Qt.GlobalColor.red)
-        self._animation_pen.setWidth(8)
-        self._animation_timer = QTimer(self)
-        self._animation_timer.timeout.connect(lambda: self._draw_next_segment(liste_produits))
-        self._animation_timer.start(60)  # Vitesse en ms (genre 60 = fluide et pas trop lent)
-
-    def _draw_next_segment(self, liste_produits):
-        idx = self._animation_index
-        points = self._animation_points
-        pen = self._animation_pen
-        if idx < len(points) - 1:
-            line = QGraphicsLineItem(points[idx].x(), points[idx].y(), points[idx + 1].x(), points[idx + 1].y())
-            line.setPen(pen)
-            line.setZValue(3)
-            self.scene.addItem(line)
-            self._animation_index += 1
-        else:
-            # Fin animation, ajoute les flèches sur les produits
-            self._animation_timer.stop()
-            coords_produits = self.model.get_coords_produits(liste_produits)
-            for coord in coords_produits:
-                try:
-                    ligne, colonne = coord.split(",")
-                    ligne = int(ligne)
-                    col_idx = self.col_to_int(colonne)
-                    x = (col_idx + 0.5) * self.taille_case_x
-                    y = (ligne - 0.5) * self.taille_case_y
-                    point = QPointF(x, y)
-                    self.draw_arrow(point)
-                except Exception as e:
-                    print(f"Erreur flèche coordonnée {coord} : {e}")
 
     def col_to_int(self, col_str):
         col_str = col_str.strip().upper()
@@ -171,9 +174,3 @@ class ClientVue(QWidget):
         for c in col_str:
             res = res * 26 + (ord(c) - ord('A') + 1)
         return res - 1
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    fenetre = ClientVue()
-    fenetre.show()
-    sys.exit(app.exec())

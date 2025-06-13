@@ -1,42 +1,41 @@
 {
-    "Poissonerie1": [
+    "Poissonnerie1": [
         "Bigorneaux",
         "Crabe",
         "Crevettes",
         "Écrevisses",
         "Langoustine"
     ],
-    "Poissonerie2": [
+    "Poissonnerie2": [
         "Coques",
         "Coquille St-Jacques",
         "Huîtres",
         "Moules"
     ],
-    "Poissonerie3": [
+    "Poissonnerie3": [
         "Cabillaud",
         "Colin",
         "Hareng fumé",
         "Maquereaux",
         "Poissons mer"
     ],
-    "Poissonerie4": [
+    "Poissonnerie4": [
         "Poissons eau douce",
         "Gambas",
         "Homard"
     ],
-    "Poissonerie5": [
+    "Poissonnerie5": [
         "Poissons panés",
         "Soupe de poissons",
         "Surimi"
     ],
-    "Poissonerie6": [
+    "Poissonnerie6": [
         "Sardines",
         "Saumon",
         "Saumon fumé",
         "Encornet",
         "Poulpe"
     ],
-
     "Fromages Traditionnels1": [
         "Comté"
     ],
@@ -58,7 +57,6 @@
     "Fromages Traditionnels7": [
         "Brie"
     ],
-
     "Volailles1": [
         "Aiguillette de poulet",
         "Cuisses poulet rôti"
@@ -76,7 +74,6 @@
         "Wings poulet",
         "Pintade"
     ],
-
     "Boucherie LS1": [
         "Agneau",
         "Aiguillette de boeuf",
@@ -103,7 +100,6 @@
         "Steak haché",
         "Veau"
     ],
-
     "Boucherie Traditionnelle1": [
         "Côtes de veau"
     ],
@@ -122,7 +118,6 @@
     "Boucherie Traditionnelle6": [
         "Cervelas"
     ],
-
     "Rotisserie1": [
         "Rôti fumé"
     ],
@@ -141,7 +136,6 @@
     "Rotisserie6": [
         "Magret de canard"
     ],
-
     "Charcuterie1": [
         "Andouille",
         "Andouillette",
@@ -177,8 +171,7 @@
         "Saucisse de Toulouse",
         "Saucisses"
     ],
-
-    "Ultra frais1": [ 
+    "Ultra frais1": [
         "Croque monsieur",
         "Crudités"
     ],
@@ -206,7 +199,6 @@
         "Ravioles",
         "Taboulé"
     ],
-
     "Fromages1": [
         "Feta",
         "Fromage blanc"
@@ -225,15 +217,12 @@
     "Fromages5": [
         "Tzatziki"
     ],
-
     "Lait": [
         "Lait"
     ],
-
     "Oeufs": [
         "Œufs"
     ],
-
     "Saucissons1": [
         "Saucisson à l'ail"
     ],
@@ -250,7 +239,6 @@
         "Saucisson sec au fromage",
         "Saucisson sec au vin"
     ],
-
     "Saurisseries1": [
         "Anchois",
         "Bolognaise"
@@ -283,7 +271,6 @@
         "Soupes",
         "Thon"
     ],
-
     "Charcuterie LS1": [
         "Cordon bleu"
     ],
@@ -311,137 +298,129 @@
     "Charcuterie LS9": [
         "Pastrami"
     ],
-
-    "Fruits et Légumes1": [
+    "Fruits Et Légumes1": [
         "Ail",
         "Artichaut",
         "Asperges",
         "Aubergine"
     ],
-
-    "Fruits et Légumes2": [
+    "Fruits Et Légumes2": [
         "Avocat",
         "Betterave",
         "Blette",
         "Brocolis"
     ],
-
-    "Fruits et Légumes3": [
+    "Fruits Et Légumes3": [
         "Carotte",
         "Céleri",
         "Champignons",
         "Champignons chinois"
     ],
-
-    "Fruits et Légumes4": [
+    "Fruits Et Légumes4": [
         "Chou",
         "Chou de Bruxelles",
         "Choucroute",
         "Chou-fleur"
     ],
-
-    "Fruits et Légumes5": [
+    "Fruits Et Légumes5": [
         "Chou-rouge",
         "Ciboulette",
         "Citrouille",
         "Coeur de palmier"
     ],
-
-    "Fruits et Légumes6": [
+    "Fruits Et Légumes6": [
         "Concombre",
         "Courge",
         "Courgette",
         "Cresson"
     ],
-
-    "Fruits et Légumes7": [
+    "Fruits Et Légumes7": [
         "Échalote",
         "Endive",
         "Épinards",
         "Fenouil"
     ],
-    "Fruits et Légumes8": [
+    "Fruits Et Légumes8": [
         "Flageolets",
         "Germe de soja",
         "Gingembre",
         "Haricot"
     ],
-    "Fruits et Légumes9": [
+    "Fruits Et Légumes9": [
         "Lentilles",
         "Macédoine",
         "Mâche",
         "Maïs"
     ],
-    "Fruits et Légumes10": [
+    "Fruits Et Légumes10": [
         "Menthe",
         "Navet",
         "Oignons",
         "Palmier (coeur)"
     ],
-    "Fruits et Légumes11": [
+    "Fruits Et Légumes11": [
         "Persil",
         "Petits pois",
         "Poireau",
         "Pois gourmand"
     ],
-    "Fruits et Légumes12": [
+    "Fruits Et Légumes12": [
         "Pois mangetout",
         "Poivron",
         "Pomme de terre",
         "Potimarron"
     ],
-    "Fruits et Légumes13": [
+    "Fruits Et Légumes13": [
         "Pousses de bambou",
         "Radis",
         "Radis noir",
         "Salade laitue"
     ],
-    "Fruits et Légumes14": [
+    "Fruits Et Légumes14": [
         "Salade composée",
         "Salsifis",
         "Tomate",
         "Topinambour"
     ],
-    "Fruits et Légumes15": [
+    "Fruits Et Légumes15": [
         "Abricots",
-        "Ananas",
         "Bananes",
-        "Brugnon"
+        "Brugnon",
+        "Ananas",
+        "Pasteque"
     ],
-    "Fruits et Légumes16": [
+    "Fruits Et Légumes16": [
         "Cassis",
         "Cerises",
         "Citrons",
         "Clémentine"
     ],
-    "Fruits et Légumes17": [
+    "Fruits Et Légumes17": [
         "Figue",
         "Fraises",
         "Framboise",
         "Fruit de la passion"
     ],
-    "Fruits et Légumes18": [
+    "Fruits Et Légumes18": [
         "Grenade",
         "Groseille",
         "Kaki",
         "Kiwis"
     ],
-    "Fruits et Légumes19": [
+    "Fruits Et Légumes19": [
         "Litchi",
         "Mandarines",
         "Mangue",
         "Melons"
     ],
-    "Fruits et Légumes20": [
+    "Fruits Et Légumes20": [
         "Mirabelle",
         "Mûre",
         "Myrtille",
         "Nectarine",
         "Oranges",
         "Pamplemousses"
- 
     ],
-
     "Surgelés1": [
         "Haricots verts surgelés"
     ],
@@ -484,7 +463,6 @@
     "Surgelés14": [
         "Glaces au chocolat"
     ],
-
     "Patisseries industrielles et pains1": [
         "Biscottes",
         "Brioche"
@@ -509,7 +487,6 @@
         "Pâte à tartiner",
         "Quatre quart"
     ],
-
     "Univers animaux1": [
         "Boites"
     ],
@@ -546,7 +523,6 @@
     "Univers animaux12": [
         "Sacs de nourriture pour poissons"
     ],
-
     "Univers bébé1": [
         "Couches bébé"
     ],
@@ -583,7 +559,6 @@
     "Univers bébé12": [
         "Shampooing bébé"
     ],
-
     "Parfumerie1": [
         "Après rasage"
     ],
@@ -644,7 +619,6 @@
     "Parfumerie20": [
         "Rasoirs"
     ],
-
     "Saisonnier1": [
         "Allume barbecue"
     ],
@@ -717,30 +691,24 @@
     "Saisonnier24": [
         "Glace pilée"
     ],
-
     "Bieres": [
         "Bière"
     ],
-
     "Eaux": [
         "Eau gazeuse",
         "Eau minérale"
     ],
-
     "Alcools": [
         "Alcools fort"
     ],
-
     "Cave à vins": [
         "Vin"
     ],
-
     "Vins courants": [
         "Vin rouge",
         "Vin blanc",
         "Vin rosé"
     ],
-    
     "Epicerie1": [
         "Blé dur"
     ],
@@ -852,9 +820,9 @@
     "Epicerie37": [
         "Sarrasin"
     ],
-
     "Textiles1": [
-        "T-shirt"
+        "T-shirt",
+        "enfant"
     ],
     "Textiles2": [
         "Chaussettes"
@@ -895,14 +863,12 @@
     "Textiles14": [
         "Bonnet"
     ],
-
     "Jus de fruits1": [
         "Jus de fruits"
     ],
     "Jus de fruits2": [
         "Sirop"
     ],
-
     "Patisseries et pains LS1": [
         "Barres chocolatées"
     ],
@@ -927,7 +893,6 @@
         "Guacamole",
         "Mini-feuilletés"
     ],
-
     "Entretien1": [
         "Nettoyant Four"
     ],
@@ -964,7 +929,6 @@
     "Entretien12": [
         "Produit sol"
     ],
-
     "Bazar1": [
         "Bloc note",
         "Calculatrice"
@@ -1009,7 +973,6 @@
         "Timbres",
         "Trombones"
     ],
-    
     "Lessives": [
         "Lessive"
     ]
