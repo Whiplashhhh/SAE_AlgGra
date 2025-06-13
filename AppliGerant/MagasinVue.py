@@ -16,7 +16,7 @@ from Infos import Infos
 
 class CaseMagasin(QGraphicsRectItem):
     """
-    Une case du magasin, cliquable dans la scène.
+    Une case cliquable dans le magasin
     """
     def __init__(self, x, y, width, height, ligne, colonne, modele, parent_vue):
         super().__init__(x, y, width, height)
@@ -25,17 +25,18 @@ class CaseMagasin(QGraphicsRectItem):
         self.modele = modele
         self.parent_vue = parent_vue
         self.setBrush(QBrush(Qt.GlobalColor.transparent))
-        self.setPen(Qt.GlobalColor.gray)
+        self.setPen(Qt.GlobalColor.gray) #Bordure grise
         self.setFlag(QGraphicsRectItem.GraphicsItemFlag.ItemIsSelectable)
         self.setAcceptHoverEvents(True)
 
-    def mousePressEvent(self, event):
+    def mousePressEvent(self, event): #Clique sur la case 
         self.parent_vue.case_cliquee(self.ligne, self.colonne)
         super().mousePressEvent(event)
 
-class SceneMagasin(QGraphicsScene):
+class SceneMagasin(QGraphicsScene):# pourquoi avoir utilisé QGraphicsScene ? car il va permettre de
+    #placer plusieurs éléments graphiques et plusieurs types d'items mélangé qu'on utilise après, on l'a vu sur la doc
     """
-    La scène graphique qui affiche le plan et les cases.
+    Class permettant d'affiche le plan et le quadrillage 
     """
     def __init__(self, modele, vue):
         super().__init__()
@@ -44,13 +45,13 @@ class SceneMagasin(QGraphicsScene):
         # Affiche le plan d'après le chemin du projet
         pixmap = QPixmap(self.modele.infos_projet["plan_magasin"])
         larg, haut = pixmap.width(), pixmap.height()
-        pixmap = pixmap.scaled(larg, haut, Qt.AspectRatioMode.KeepAspectRatio)
+        pixmap = pixmap.scaled(larg, haut, Qt.AspectRatioMode.KeepAspectRatio)#Redimension de l'image
         self.plan = QGraphicsPixmapItem(pixmap)
         self.addItem(self.plan)
         self.tailleX = larg / self.modele.colonnes
         self.tailleY = haut / self.modele.lignes
-        self.setSceneRect(-30, -30, larg+60, haut+60)
-        # Affichage du quadrillage
+        self.setSceneRect(-30, -30, larg+60, haut+60)#Défini la taille de la scène graphique
+        # Ajout des cases du quadrillage
         for i in range(self.modele.lignes):
             for j in range(self.modele.colonnes):
                 x = j * self.tailleX
@@ -65,7 +66,7 @@ class SceneMagasin(QGraphicsScene):
         font.setPointSize(16)
         for j in range(self.modele.colonnes):
             x = j * self.tailleX + self.tailleX / 2 - 20
-            texte = chr(ord('A') + j) if j < 26 else 'A' + chr(ord('A') + (j-26))
+            texte = chr(ord('A') + j) if j < 26 else 'A' + chr(ord('A') + (j-26))#Conversion des numéros, >26 AA
             item = QGraphicsTextItem(texte)
             item.setFont(font)
             item.setPos(x, -40)
@@ -77,9 +78,9 @@ class SceneMagasin(QGraphicsScene):
             item.setPos(-40, y)
             self.addItem(item)
 
-    # Méthode pour afficher une croix sur une ou plusieurs cases (bonus pour affichage)
+    # Méthode pour afficher une croix sur une ou plusieurs cases quand on veut un produit
     def afficher_croix(self, liste_cases):
-        if hasattr(self, 'croix_items'):
+        if hasattr(self, 'croix_items'):# Cette fonction permet de vérifier si l'objet possède un attribut donnée
             for croix in self.croix_items:
                 self.removeItem(croix)
             self.croix_items.clear()
@@ -88,64 +89,67 @@ class SceneMagasin(QGraphicsScene):
         for case_str in liste_cases:
             ligne, colonne = case_str.split(',')
             ligne = int(ligne)-1
-            colonne_num = (ord(colonne)-ord('A')) if len(colonne) == 1 else 26+ord(colonne[1])-ord('A')
+            colonne_num = (ord(colonne)-ord('A')) if len(colonne) == 1 else 26+ord(colonne[1])-ord('A')#Inverse de tout a l'heure permet de convertir en numéro
             x = colonne_num * self.tailleX
             y = ligne * self.tailleY
-            croix1 = self.addLine(x, y, x+self.tailleX, y+self.tailleY, QPen(Qt.GlobalColor.red, 2))
+            croix1 = self.addLine(x, y, x+self.tailleX, y+self.tailleY, QPen(Qt.GlobalColor.red, 2))#Dessine la croix
             croix2 = self.addLine(x, y+self.tailleY, x+self.tailleX, y, QPen(Qt.GlobalColor.red, 2))
             self.croix_items.extend([croix1, croix2])
 
-
 class MagasinVue(QWidget):
     """
-    La vue principale de l'application (IHM).
+    La vue principale de l'application (IHM)
     """
     def __init__(self):
         super().__init__()
-        self.selection_projet()
+        self.selection_projet()#Séléction du projet
 
     def selection_projet(self):
-        """Lance la boîte de dialogue pour créer/charger un projet."""
+        """
+        Créer/charger un projet
+        """
         self.dialog = Infos(self.on_infos_projet_valide)
         self.dialog.show()
 
     def on_infos_projet_valide(self, infos_projet):
-        """Initialise l'IHM après création/chargement du projet."""
+        """
+        Initialisation de l'IHM après création/chargement du projet
+        """
         self.infos_projet = infos_projet
         self.setup_ui()
 
     def setup_ui(self):
-        # === Création du modèle et du contrôleur ===
+        #Création du modèle et du contrôleur
         self.modele = MagasinModel(self.infos_projet)
         self.controleur = MagasinControleur(self.modele, self)
         self.scene_magasin = SceneMagasin(self.modele, self)
         self.view = QGraphicsView(self.scene_magasin)
-        self.view.fitInView(self.scene_magasin.sceneRect(), Qt.AspectRatioMode.KeepAspectRatio)
+        self.view.fitInView(self.scene_magasin.sceneRect(), Qt.AspectRatioMode.KeepAspectRatio)#Adapte automatiquement le zoom
         self.view.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        # === Widgets principaux à droite ===
+        #Widgets principaux à droite
         self.label_coordonnees = QLabel("Aucune case sélectionnée")
 
-        # Liste des produits de la case sélectionnée
+        #Liste des produits de la case sélectionnée
         self.liste_produits_case = QListWidget()
         self.liste_produits_case.setFixedWidth(200)
 
-        # Ajout/suppression produit sur la case
+        #Ajout/suppression produit sur la case
         self.input_produit = QLineEdit()
         self.bouton_ajout = QPushButton("Ajouter produit")
         self.bouton_supprimer = QPushButton("Supprimer produit")
         self.bouton_ajout.clicked.connect(self.ajouter_produit_case)
         self.bouton_supprimer.clicked.connect(self.supprimer_produit_case)
 
-        # Réinitialisation de tous les produits
+        #Réinitialisation de tous les produits
         self.bouton_reset = QPushButton("Réinitialiser tous les produits")
         self.bouton_reset.clicked.connect(self.reset_produits)
 
-        # Suppression du projet (optionnel)
+        #Suppression du projet
         self.bouton_supprimer_projet = QPushButton("Supprimer le projet (IRRÉVERSIBLE)")
         self.bouton_supprimer_projet.clicked.connect(self.supprimer_projet)
 
-        # Bloc grandes catégories
+        #Bloc grandes catégories
         with open("./categorie.json", "r", encoding="utf-8") as f:
             self.mapping_familles = json.load(f)
 
@@ -155,17 +159,17 @@ class MagasinVue(QWidget):
             self.liste_categories.addItem(item)
         self.liste_categories.itemClicked.connect(self.afficher_produits_de_famille)
 
-        # Bloc produits de la grande catégorie sélectionnée
+        #Bloc produits de la grande catégorie sélectionnée
         self.liste_produits_global = QListWidget()
         self.liste_produits_global.itemClicked.connect(self.afficher_produit_selectionne)
 
-        # === Organisation des widgets à droite ===
+        #Layout droite
         layout_droit = QVBoxLayout()
         layout_droit.addWidget(self.bouton_supprimer_projet)
         layout_droit.addWidget(self.bouton_reset)
         layout_droit.addWidget(self.label_coordonnees)
 
-        # --- Bloc produits de la case (gauche du bloc) + boutons ajout/suppression (droite du bloc) ---
+        #Gestion des produits par case
         case_layout = QHBoxLayout()
         case_left = QVBoxLayout()
         case_left.addWidget(QLabel("Produits de la case"))
@@ -181,7 +185,7 @@ class MagasinVue(QWidget):
 
         layout_droit.addLayout(case_layout)
 
-        # Bloc grandes catégories
+        #Bloc grandes catégories
         layout_droit.addWidget(QLabel("Grandes Catégories"))
         layout_droit.addWidget(self.liste_categories)
 
@@ -189,10 +193,9 @@ class MagasinVue(QWidget):
         layout_droit.addWidget(QLabel("Produits de la catégorie"))
         layout_droit.addWidget(self.liste_produits_global)
 
-        # === Agencement global ===
+        # Réunnion gauche et droite
         layout = QHBoxLayout()
         layout.addWidget(self.view)
-        # Pour limiter la taille de la partie droite, comme dans ton ancien code :
         widget_droit = QWidget()
         widget_droit.setLayout(layout_droit)
         widget_droit.setMaximumWidth(350)
@@ -204,7 +207,7 @@ class MagasinVue(QWidget):
         self.case_actuelle = None
         self.categorie_actuelle = None
 
-    # ------------- Méthodes logiques (ne changent pas) ----------------
+    # Case cliqué
     def case_cliquee(self, ligne, colonne):
         produits, key, categorie = self.controleur.get_produits_de_case(ligne, colonne)
         self.case_actuelle = key
@@ -260,7 +263,7 @@ class MagasinVue(QWidget):
         ]
 
         for chemin in chemins:
-            # Pour éviter de supprimer un plan générique utilisé ailleurs, on pourrait ajouter un test sur le chemin ou demander confirmation pour l’image
+            # Utilisation du try catch vu en R2.03
             if chemin and os.path.exists(chemin):
                 try:
                     os.remove(chemin)
@@ -272,18 +275,19 @@ class MagasinVue(QWidget):
         else:
             QMessageBox.information(self, "Suppression réussie", "Le projet a bien été supprimé.")
 
-        # Ferme la fenêtre principale et rouvre la sélection de projet (clean)
+        # Ferme la fenêtre principale et rouvre la sélection de projet
         self.close()
         self.selection_projet()
 
-    def afficher_produits_de_famille(self, item):
+    def afficher_produits_de_famille(self, item):#Affiche les produits d'une catégorie sélectionnée
         famille = item.text()
         self.liste_produits_global.clear()
-        for sous_categorie in self.mapping_familles[famille]:
+        for sous_categorie in self.mapping_familles[famille]:#Il parcours les sous-catégories à une famille
             produits = self.modele.produits_par_categories.get(sous_categorie, [])
             for produit in produits:
                 self.liste_produits_global.addItem(produit)
 
+    #Affiche les croix des produits sélectionnés
     def afficher_produit_selectionne(self, item):
         produit = item.text()
         # Affichage croix sur toutes les cases où il y a ce produit
@@ -296,7 +300,9 @@ class MagasinVue(QWidget):
             self.scene_magasin.afficher_croix(liste_cases)
 
     def _parse_case(self, key):
-        """Transforme une clé '4,B' en tuple (3,1)."""
+        """
+        Transforme une clé '4,B' en indices (3,1)
+        """
         ligne_str, colonne_str = key.split(',')
         ligne = int(ligne_str) - 1
         if len(colonne_str) == 1:
