@@ -2,14 +2,14 @@
 #   Willem VANBAELINGHEM--DEZITTER - TPA
 #   Alex FRANCOIS - TPA
 # date création: 09/06/2025
-# dernière maj: 12/06/2025
+# dernière maj: 13/06/2025
 import os
 import json
 import sys
 from PyQt6.QtWidgets import (QApplication, QWidget, QListWidgetItem, QGraphicsScene, QGraphicsView, QGraphicsPixmapItem, 
                              QGraphicsRectItem, QGraphicsTextItem, QLabel, QVBoxLayout, QHBoxLayout, 
                              QListWidget, QPushButton, QLineEdit, QMessageBox)
-from PyQt6.QtGui import QGuiApplication, QBrush, QPixmap, QFont, QColor, QPen
+from PyQt6.QtGui import QBrush, QPixmap, QFont, QColor, QPen
 from PyQt6.QtCore import Qt
 from MagasinModel import MagasinModel
 from MagasinControleur import MagasinControleur
@@ -28,23 +28,6 @@ class CaseMagasin(QGraphicsRectItem):
         self.setAcceptHoverEvents(True)
         
     def mousePressEvent(self, event):
-        #colonne = self.colonne
-        # if colonne < 26:
-        #     lettre_colonne = chr(ord('A') + colonne)
-        # else:
-        #     lettre_colonne = 'A' + chr(ord('A') + (colonne - 26))
-        
-        # key = f"{self.ligne+1},{lettre_colonne}"
-
-        # if self.modele.is_case_util(self.ligne, self.colonne):
-        #     categorie = self.modele.positions_categories.get(key, None)
-        #     if categorie:
-        #         produits = self.modele.produits_par_categories.get(categorie, [])
-        #     else:
-        #         produits = []
-        #     self.vue.afficher_produits_case(produits)
-        # else:
-        #     self.vue.afficher_produits_case([])
         self.parent_vue.case_cliquee(self.ligne, self.colonne)
         
         super().mousePressEvent(event)
@@ -126,9 +109,6 @@ class SceneMagasin(QGraphicsScene):
 class MagasinVue(QWidget):
     def __init__(self):
         super().__init__()
-        # self.modele = MagasinModel("./graphe.json", "./positions_categories.json", "./produits_par_categories.json")
-        # self.controleur = MagasinControleur(self.modele, self)
-        # self.scene_magasin = SceneMagasin(self.modele, self)
         self.selection_projet()
         
     def setup_ui(self):

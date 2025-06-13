@@ -9,12 +9,9 @@ import json
 class MagasinModel:
     def __init__(self, infos_projet):
         self.infos_projet = infos_projet
-        # self.largeur_plan = largeur_plan
-        # self.hauteur_plan = hauteur_plan
+    
         self.lignes = 52
         self.colonnes = 52
-        # self.tailleX = largeur_plan / self.colonnes
-        # self.tailleY = hauteur_plan / self.lignes
         
         self.fichier_produits = infos_projet["produits_par_categories"]
 

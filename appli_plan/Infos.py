@@ -1,4 +1,3 @@
-import sys
 import json
 import os
 from datetime import datetime
@@ -126,7 +125,7 @@ class Infos(QWidget):
             except Exception as e:
                 QMessageBox.critical(self, "Erreur", f"Impossible de charger le fichier projet.\n{e}")
 
-# # === test indépendant (à supprimer après intégration) ===
+# # === test  ===
 # if __name__ == "__main__":
 #     app = QApplication(sys.argv)
 #     f = Infos(lambda infos: print(infos))
