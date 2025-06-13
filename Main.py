@@ -1,6 +1,6 @@
 import sys
 import subprocess
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QInputDialog, QMessageBox
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QInputDialog, QMessageBox, QLineEdit
 
 class MainMenu(QWidget):
     def __init__(self):
@@ -25,9 +25,14 @@ class MainMenu(QWidget):
         self.setLayout(layout)
 
     def lancer_gerant(self):
-        mot_de_passe, ok = QInputDialog.getText(self, "Mot de passe", "Entre le mot de passe :")
+        dialog = QInputDialog(self)
+        dialog.setWindowTitle("Mot de passe")
+        dialog.setLabelText("Entre le mot de passe :")
+        dialog.setTextEchoMode(QLineEdit.EchoMode.Password)  # Affiche des ***
+        ok = dialog.exec()
+        mot_de_passe = dialog.textValue()
         if ok:
-            if mot_de_passe == "MeilleureAppli":  # Le mot de passe à rentrer pour accéder à l'appli gérant
+            if mot_de_passe == "VinsurVin":
                 subprocess.Popen([sys.executable, "AppliGerant/Main_Gerant.py"])
                 self.close()
             else:
