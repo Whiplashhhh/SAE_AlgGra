@@ -1,7 +1,7 @@
-﻿- Thomas TEITEN
-- Alex FRANCOIS
-- Romain THEOBALD
-- Willem VANBAELINGHEM—DEZITTER
+﻿- Thomas TEITEN  --  thomasteiten
+- Alex FRANCOIS  --  alexfrancois26
+- Romain THEOBALD  --  RomainTheobald
+- Willem VANBAELINGHEM—DEZITTER  --  Whiplashhhh
 
 ## Compte rendu 10/06/2025
 
@@ -56,7 +56,7 @@ Pour lancer l'application :
 ```bash
 python main.py
 ```
-#### MOT DE PASSE DE L'APPLI GÉRANT : VinsurVin
+# MOT DE PASSE DE L'APPLI GÉRANT : VinsurVin
 
 ### Cette commande lance un menu qui permet à l'utilisateur de choisir entre l'application Gérant et l'application Client.
 
