@@ -27,7 +27,7 @@ class ClientModel:
         #Ouverture des fichiers JSON nécessaires 
         with open(os.path.join(json_dir, "categorie.json"), "r", encoding="utf-8-sig") as f:
             self.sous_categories = json.load(f)
-        with open(os.path.join(json_dir, "produits_par_categories_test.json"), "r", encoding="utf-8-sig") as f:
+        with open(os.path.join(json_dir, "produits_par_categories.json"), "r", encoding="utf-8-sig") as f:
             self.produits_par_sous_categorie = json.load(f)
         with open(os.path.join(json_dir, "positions_categories.json"), "r", encoding="utf-8-sig") as f:
             self.positions = json.load(f)
