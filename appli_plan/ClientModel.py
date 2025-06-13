@@ -1,6 +1,7 @@
 import json
 import numpy as np
 import os
+from collections import deque
 
 class ClientModel:
     def __init__(self):
@@ -9,27 +10,42 @@ class ClientModel:
 
     def charger_fichiers(self):
         base_path = os.path.dirname(__file__)
-        with open(os.path.join(base_path, "produits_par_sous_catégori.json"), "r", encoding="utf-8") as f:
-            self.sous_categories = json.load(f)
+
+        # Chargement des produits (avec sous-catégories multiples)
         with open(os.path.join(base_path, "produits_repartis_complet_final.json"), "r", encoding="utf-8") as f:
             self.produits_par_sous_categorie = json.load(f)
-        self.categories = list(self.sous_categories.keys())
+
+        # Chargement des positions des catégories
+        with open(os.path.join(base_path, "positions_categories.json"), "r", encoding="utf-8") as f:
+            self.positions_categories = json.load(f)
+
+        # Génération d'une table produit → catégorie (normalisée)
+        self.produit_to_categorie = {}
+        for sous_cat, produits in self.produits_par_sous_categorie.items():
+            # On nettoie le nom de la catégorie : exemple "Poissonnerie1" → "Poissonnerie"
+            categorie = ''.join([i for i in sous_cat if not i.isdigit()]).strip()
+            for produit in produits:
+                self.produit_to_categorie[produit] = categorie
+
+        # Liste des catégories globales (nettoyées)
+        self.categories = list(set(self.produit_to_categorie.values()))
+
+        # Chargement du graphe
+        with open(os.path.join(base_path, "graphe.json"), "r", encoding="utf-8") as f:
+            self.graphe = json.load(f)
 
     def get_categories(self):
         return self.categories
 
     def get_produits_categorie(self, categorie):
         produits = []
-        sous_cats = self.sous_categories.get(categorie, [])
-        for sous_cat in sous_cats:
-            produits.extend(self.produits_par_sous_categorie.get(sous_cat, []))
-        return sorted(set(produits))
+        for produit, cat in self.produit_to_categorie.items():
+            if cat == categorie:
+                produits.append(produit)
+        return sorted(produits)
 
     def get_tous_les_produits(self):
-        tous = []
-        for cat in self.categories:
-            tous.extend(self.get_produits_categorie(cat))
-        return sorted(set(tous))
+        return sorted(list(self.produit_to_categorie.keys()))
 
     def ajouter_produit(self, produit):
         if produit in self.liste_courses:
@@ -66,3 +82,47 @@ class ClientModel:
 
     def get_liste_courses(self):
         return self.liste_courses
+
+    def get_coords_produits(self, produits):
+        coords = []
+        for produit in produits:
+            categorie = self.produit_to_categorie.get(produit)
+            if categorie:
+                coord = self.positions_categories.get(categorie)
+                if coord:
+                    coords.append(coord)
+        return coords
+
+    def dijkstra(self, depart):
+        file = deque([[depart]])
+        dico = {depart: (0, [depart])}
+
+        while file:
+            chemin = file.popleft()
+            sommet = chemin[-1]
+            voisins = self.graphe.get(sommet, [])
+            for voisin in voisins:
+                nouvelle_distance = dico[sommet][0] + 1
+                nouveau_chemin = chemin + [voisin]
+                if voisin not in dico or nouvelle_distance < dico[voisin][0]:
+                    dico[voisin] = (nouvelle_distance, nouveau_chemin)
+                    file.append(nouveau_chemin)
+        return dico
+
+    def get_chemin(self, depart, produits):
+        coords_produits = self.get_coords_produits(produits)
+        print("Coords produits trouvées :", coords_produits)  # pour debug
+        chemin_final = []
+        position_actuelle = depart
+        produits_restants = coords_produits.copy()
+
+        while produits_restants:
+            dico_chemin = self.dijkstra(position_actuelle)
+            prochain = min(produits_restants, key=lambda c: dico_chemin[c][0])
+            chemin_final += dico_chemin[prochain][1][1:]
+            position_actuelle = prochain
+            produits_restants.remove(prochain)
+
+        dico_retour = self.dijkstra(position_actuelle)
+        chemin_final += dico_retour[depart][1][1:]
+        return [depart] + chemin_final

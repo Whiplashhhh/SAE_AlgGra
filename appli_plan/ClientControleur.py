@@ -21,6 +21,7 @@ class ClientControleur:
         self.vue.bouton_aleatoire.clicked.connect(self.generer_aleatoire)
         self.vue.liste_sous_categories.itemClicked.connect(self.retirer_produit)
         self.vue.search_bar.textChanged.connect(self.filtrer_produits)
+        self.vue.bouton_cest_parti.clicked.connect(self.lancer_chemin)
 
         self.vue.show()
 
@@ -82,6 +83,15 @@ class ClientControleur:
     def generer_aleatoire(self):
         self.modele.generer_liste_aleatoire()
         self.mettre_a_jour_affichage_liste()
+
+    def lancer_chemin(self):
+        liste_courses = list(self.modele.get_liste_courses().keys())
+        if not liste_courses:
+            return
+        chemin = self.modele.get_chemin("48,AL", liste_courses)
+        self.vue.afficher_chemin(chemin)
+
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
