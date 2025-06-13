@@ -80,22 +80,22 @@ class SceneMagasin(QGraphicsScene):
         
         #affichage des coordonnées
         font = QFont()
-        font.setBold(False)
-        font.setPointSize(8)
+        font.setBold(True)
+        font.setPointSize(30)
 
         for j in range(self.modele.colonnes):
-            x = j * self.tailleX + self.tailleX / 2 - 9  # léger décalage pour mieux centrer horizontalement
+            x = j * self.tailleX + self.tailleX / 2 - 25  # léger décalage pour mieux centrer horizontalement
             texte = chr(ord('A') + j) if j < 26 else 'A' + chr(ord('A') + (j-26))
             item = QGraphicsTextItem(texte)
             item.setFont(font)
-            item.setPos(x, -20)
+            item.setPos(x, -50)
             self.addItem(item)
 
         for i in range(self.modele.lignes):
-            y = i * self.tailleY + self.tailleY / 2 - 10  # léger décalage pour mieux centrer verticalement
+            y = i * self.tailleY + self.tailleY / 2 - 25  # léger décalage pour mieux centrer verticalement
             item = QGraphicsTextItem(str(i+1))
             item.setFont(font)
-            item.setPos(-20, y)
+            item.setPos(-55, y)
             self.addItem(item)
                 
     def afficher_croix(self, liste_cases):
@@ -140,6 +140,8 @@ class MagasinVue(QWidget):
             self.mapping_familles = json.load(f)
     
         self.view = QGraphicsView(self.scene_magasin)
+        self.view.fitInView(self.scene_magasin.sceneRect(), Qt.AspectRatioMode.KeepAspectRatio)
+        self.view.setAlignment(Qt.AlignmentFlag.AlignCenter)
         
         self.liste_produits_case = QListWidget()
         self.liste_produits_case.setFixedWidth(200)
@@ -156,12 +158,19 @@ class MagasinVue(QWidget):
         self.input_produit = QLineEdit()
         self.bouton_ajout = QPushButton("Ajouter produit")
         self.bouton_supprimer = QPushButton("Supprimer produit")
+        self.bouton_reset = QPushButton("Réinitialiser tous les produits placés")
+        self.bouton_supprimer_projet = QPushButton("Supprimer le projet (IRRÉVERSIBLE)")
         
         self.bouton_ajout.clicked.connect(self.ajouter_produit_case)
         self.bouton_supprimer.clicked.connect(self.supprimer_produit_case)
+        self.bouton_reset.clicked.connect(self.reset_produits)
+        self.bouton_supprimer_projet.clicked.connect(self.supprimer_projet)
         
         layout_droit = QVBoxLayout()
+        layout_droit.addWidget(self.bouton_supprimer_projet)
+        layout_droit.addWidget(self.bouton_reset)
         layout_droit.addWidget(self.label_coordonnees)
+        
 
         # Bloc Produits de la case avec boutons à droite
         case_layout = QHBoxLayout()
@@ -199,10 +208,14 @@ class MagasinVue(QWidget):
         # Assemblage global
         layout = QHBoxLayout()
         layout.addWidget(self.view)
+        widget_droit = QWidget()
+        widget_droit.setLayout(layout_droit)
+        widget_droit.setMaximumWidth(350)   # Ajuste la valeur pour un rendu idéal
+        layout.addWidget(widget_droit)
         layout.addLayout(layout_droit)
         self.setLayout(layout)
         self.setWindowTitle("MoliShop - Gerant ")
-        self.showMaximized()
+        self.hide()
         
         self.case_actuelle = None
         self.categorie_actuelle = None
@@ -285,9 +298,52 @@ class MagasinVue(QWidget):
         # On reçoit le dico infos_projet, on lance tout le reste :
         self.infos_projet = infos_projet
         self.setup_ui()
+        self.showMaximized()
+        
+    def reset_produits(self):
+        self.modele.produits_par_categories = {}
+        self.modele.sauvegarder()
+        self.liste_produits_case.clear()
+        QMessageBox.information(self, "Réinitialisation", "Tous les produits ont été supprimés !")
+        
+    def supprimer_projet(self):
+        reponse = QMessageBox.question(
+            self, "Suppression projet",
+            "ATTENTION : cette action va supprimer définitivement ce projet et tous ses fichiers liés. Continuer ?",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+        )
+        if reponse == QMessageBox.StandardButton.Yes:
+            fichiers_a_supprimer = [
+                self.infos_projet["produits_par_categories"],
+            ]
+            projet_json = None
+            # Retrouver le .json projet (il a le même nom que le projet)
+            for fichier in os.listdir(os.path.dirname(self.infos_projet["produits_par_categories"])):
+                if fichier.endswith(".json") and self.infos_projet["nom_projet"] in fichier:
+                    projet_json = os.path.join(os.path.dirname(self.infos_projet["produits_par_categories"]), fichier)
+                    break
+            if projet_json:
+                fichiers_a_supprimer.append(projet_json)
+
+            erreurs = []
+            for fichier in fichiers_a_supprimer:
+                try:
+                    if os.path.exists(fichier):
+                        os.remove(fichier)
+                except Exception as e:
+                    erreurs.append(str(e))
+            if erreurs:
+                QMessageBox.warning(self, "Erreur", "Erreur(s) lors de la suppression:\n" + "\n".join(erreurs))
+            else:
+                QMessageBox.information(self, "Projet supprimé", "Projet et fichiers supprimés avec succès.\nL'application va se fermer.")
+                QApplication.quit()
+                
+    def resizeEvent(self, event):
+        if hasattr(self, 'view'):
+            self.view.fitInView(self.scene_magasin.sceneRect(), Qt.AspectRatioMode.KeepAspectRatio)
+        super().resizeEvent(event)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MagasinVue()
-    window.show()
     sys.exit(app.exec())

@@ -1,0 +1,11 @@
+{
+    "nom_projet": "a",
+    "auteur": "a",
+    "nom_magasin": "a",
+    "adresse_magasin": "a",
+    "date_creation": "2025-06-13 01:48:13",
+    "plan_magasin": "C:/Users/vanba/OneDrive/Desktop/_SAE/SAE_AlgGra/appli_plan/plan.jpg",
+    "positions_categories": "C:/Users/vanba/OneDrive/Desktop/_SAE/SAE_AlgGra/appli_plan\\positions_categories.json",
+    "produits_par_categories": "C:/Users/vanba/OneDrive/Desktop/_SAE/SAE_AlgGra/appli_plan\\produits_par_categories_a.json",
+    "cases_utiles": "C:/Users/vanba/OneDrive/Desktop/_SAE/SAE_AlgGra/appli_plan\\graphe.json"
+}
