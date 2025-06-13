@@ -6,6 +6,6 @@
     "date_creation": "2025-06-12 22:27:02",
     "plan_magasin": "Plans/plan.jpg",
     "positions_categories": "json/positions_categories.json",
-    "produits_par_categories": "json/produits_par_categories.json",
+    "produits_par_categories": "json/produits_par_categories_test.json",
     "cases_utiles": "json/graphe.json"
 }

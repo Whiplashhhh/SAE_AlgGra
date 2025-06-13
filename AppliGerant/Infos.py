@@ -86,21 +86,6 @@ class Infos(QWidget):
         chemin_produits = f"json/produits_par_categories_{nom_projet}.json"
         chemin_cases = "json/graphe.json"
 
-        # # Copie les fichiers modèles si besoin
-        # positions_source = os.path.join(os.getcwd(), "json", "positions_categories.json")
-        # if not os.path.exists(positions_source):
-        #     QMessageBox.critical(self, "Erreur", "Le fichier positions_categories.json de base est introuvable.")
-        #     return
-        # if not os.path.exists(os.path.join(os.getcwd(), chemin_positions)):
-        #     shutil.copy(positions_source, os.path.join(os.getcwd(), chemin_positions))
-
-        # cases_source = os.path.join(os.getcwd(), "join", "graphe.json")
-        # if not os.path.exists(cases_source):
-        #     QMessageBox.critical(self, "Erreur", "Le fichier graphe.json de base est introuvable.")
-        #     return
-        # if not os.path.exists(os.path.join(os.getcwd(), chemin_cases)):
-        #     shutil.copy(cases_source, os.path.join(os.getcwd(), chemin_cases))
-
         # Création fichier produits vide si pas déjà créé
         if not os.path.exists(os.path.join(os.getcwd(), chemin_produits)):
             with open(os.path.join(os.getcwd(), chemin_produits), "w", encoding="utf-8") as f:
