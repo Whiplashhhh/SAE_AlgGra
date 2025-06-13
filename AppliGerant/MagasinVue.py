@@ -200,6 +200,7 @@ class MagasinVue(QWidget):
         widget_droit.setLayout(layout_droit)
         widget_droit.setMaximumWidth(350)
         layout.addWidget(widget_droit)
+        self.view.fitInView(self.scene_magasin.itemsBoundingRect(), Qt.AspectRatioMode.KeepAspectRatio)
         self.setLayout(layout)
         self.setWindowTitle("Application Gérant")
         self.showMaximized()

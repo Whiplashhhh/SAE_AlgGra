@@ -1,3 +1,5 @@
+import os
+import sys
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QListWidget, QPushButton,
     QLabel, QGraphicsScene, QGraphicsView, QGraphicsPixmapItem, 
@@ -21,8 +23,14 @@ class ClientVue(QWidget):
 
         self.nb_colonnes = 52  
         self.nb_lignes = 50
+        
+        # Chemin vers Plans/plan.jpg
+        base_path = sys.path[0]
+        plans_dir = os.path.join(base_path, "..", "Plans")
+        plans_dir = os.path.abspath(plans_dir)
+        plan_path = os.path.join(plans_dir, "plan.jpg")
 
-        self.plan_pixmap = QPixmap("..\Plans\plan.jpg")
+        self.plan_pixmap = QPixmap(plan_path)
         self.plan_width = self.plan_pixmap.width()
         self.plan_height = self.plan_pixmap.height()
         self.taille_case_x = self.plan_width / self.nb_colonnes
