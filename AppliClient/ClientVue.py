@@ -15,6 +15,7 @@ class ClientVue(QWidget):
         self.setWindowTitle("Application Client")
         self.resize(1400, 900)
 
+        #Layout principal
         layout_principal = QHBoxLayout(self)
 
         self.scene = QGraphicsScene()
@@ -38,6 +39,7 @@ class ClientVue(QWidget):
 
         self.charger_plan()
 
+        #Zone des produits
         zone_milieu = QVBoxLayout()
         self.label_produits = QLabel("Produits disponibles :")
         zone_milieu.addWidget(self.label_produits)
@@ -50,6 +52,7 @@ class ClientVue(QWidget):
         zone_milieu.addWidget(self.liste_produits)
         layout_principal.addLayout(zone_milieu, stretch=1)
 
+        #Zone catégories et liste de course
         zone_droite = QVBoxLayout()
         self.label_categorie = QLabel("Catégories :")
         zone_droite.addWidget(self.label_categorie)
@@ -64,6 +67,7 @@ class ClientVue(QWidget):
         self.label_total = QLabel("Total articles : 0")
         zone_droite.addWidget(self.label_total)
 
+        #Bouton pour la liste de courses
         self.bouton_charger = QPushButton("Charger une liste de courses")
         self.bouton_fermer = QPushButton("Effacer la liste de courses")
         self.bouton_sauvegarder = QPushButton("Sauvegarder la liste de courses")
@@ -79,18 +83,21 @@ class ClientVue(QWidget):
         layout_principal.addLayout(zone_droite, stretch=1)
         self.setLayout(layout_principal)
 
+        #Timer pour l'animation du tracé
         self.timer = QTimer()
         self.timer.timeout.connect(self.tracer_prochain_segment)
         self.index_segment = 0
         self.points = []
 
+    #Charger le plan du magasin
     def charger_plan(self):
         self.scene.clear()
         self.plan = QGraphicsPixmapItem(self.plan_pixmap)
         self.scene.addItem(self.plan)
         self.view.setSceneRect(self.plan.boundingRect())
-        self.view.fitInView(self.plan.boundingRect(), Qt.AspectRatioMode.KeepAspectRatio)
+        self.view.fitInView(self.plan.boundingRect(), Qt.AspectRatioMode.KeepAspectRatio) #zoom automatique sur le plan lors de l'ouverture de la fenêtre
 
+        #Quadrillage invisible
         for i in range(self.nb_lignes + 1):
             y = i * self.taille_case_y
             line = QGraphicsLineItem(0, y, self.plan_width, y)
@@ -102,6 +109,7 @@ class ClientVue(QWidget):
             line.setPen(QPen(Qt.GlobalColor.transparent, 1))
             self.scene.addItem(line)
 
+    #Affichage du meilleur chemin trouvé 
     def afficher_chemin(self, chemin, coords_produits=None):
         self.timer.stop()
         self.index_segment = 0
@@ -113,6 +121,7 @@ class ClientVue(QWidget):
         self.pen = QPen(Qt.GlobalColor.red)
         self.pen.setWidth(6)
 
+        #On convertit ici toutes les coordonnées en points réels
         for coord in chemin:
             try:
                 lig, col = coord.split(",")
@@ -143,11 +152,11 @@ class ClientVue(QWidget):
                         y = (ligne - 3) * self.taille_case_y + self.taille_case_y / 2
                     else:
                         y = (ligne - 1) * self.taille_case_y + self.taille_case_y / 2
-                    self.draw_arrow(QPointF(x, y))
+                    self.fleche(QPointF(x, y))
                 except Exception as e:
                     print(f"Erreur flèche coordonnée {coord} : {e}")
 
-
+    #Trace le chemin rouge petit à petit
     def tracer_prochain_segment(self):
         if self.index_segment >= len(self.points) - 1:
             self.timer.stop()
@@ -160,7 +169,8 @@ class ClientVue(QWidget):
         self.scene.addItem(line)
         self.index_segment += 1
 
-    def draw_arrow(self, point):
+    #Flèche verte sur les cases des produits
+    def fleche(self, point):
         taille = min(self.taille_case_x, self.taille_case_y) / 2.2
         dx = taille / 2
         arrow = QPolygonF([
@@ -175,7 +185,7 @@ class ClientVue(QWidget):
         self.scene.addItem(arrow_item)
 
 
-
+    #Convertit les lettres de colonne en nombre
     def col_to_int(self, col_str):
         col_str = col_str.strip().upper()
         res = 0
