@@ -1,5 +1,5 @@
 ﻿class File:
-    def init(self, n):
+    def __init__(self):
         self.tab = []
     def enfiler(self, x):
         self.tab.append(x)
@@ -9,13 +9,7 @@
         return len(self.tab) == 0
 
 def dijkstra(graphe: dict, depart: str, bk_liste: list = []) -> dict:
-    """
-    Renvoie un dico {sommet: (distance, chemin)}, depuis 'depart'
-    :param graphe: {sommet: [voisins]}
-    :param depart: str genre '48,AL'
-    :param bk_liste: cases à éviter
-    """
-    file = File(len(graphe))
+    file = File()
     file.enfiler([depart])
 
     dico = {depart: (0, [depart])}
@@ -23,11 +17,11 @@ def dijkstra(graphe: dict, depart: str, bk_liste: list = []) -> dict:
     while not file.est_vide():
         chemin = file.defiler()
         sommet = chemin[-1]
-        voisins = graphe.get(sommet, [])
-        for voisin in voisins:
+        voisins = graphe.get(sommet, {})
+        for voisin, distance in voisins.items():
             if voisin in bk_liste:
                 continue
-            nouvelle_distance = dico[sommet][0] + 1  # distance = 1 à chaque fois (graphe simple)
+            nouvelle_distance = dico[sommet][0] + distance
             nouveau_chemin = list(chemin) + [voisin]
             if voisin not in dico:
                 dico[voisin] = (nouvelle_distance, nouveau_chemin)
