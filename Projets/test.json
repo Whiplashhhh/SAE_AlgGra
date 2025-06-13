@@ -4,8 +4,8 @@
     "nom_magasin": "test",
     "adresse_magasin": "test",
     "date_creation": "2025-06-12 22:27:02",
-    "plan_magasin": "C:/Users/vanba/OneDrive/Desktop/_SAE/SAE_AlgGra/appli_plan/plan.jpg",
-    "positions_categories": "C:/Users/vanba/OneDrive/Desktop/_SAE/SAE_AlgGra/appli_plan\\positions_categories.json",
-    "produits_par_categories": "C:/Users/vanba/OneDrive/Desktop/_SAE/SAE_AlgGra/appli_plan\\produits_par_categories.json",
-    "cases_utiles": "C:/Users/vanba/OneDrive/Desktop/_SAE/SAE_AlgGra/appli_plan\\graphe.json"
+    "plan_magasin": "Plans/plan.jpg",
+    "positions_categories": "json/positions_categories.json",
+    "produits_par_categories": "json/produits_par_categories.json",
+    "cases_utiles": "json/graphe.json"
 }

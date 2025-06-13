@@ -149,8 +149,8 @@ class MagasinVue(QWidget):
         self.bouton_supprimer_projet = QPushButton("Supprimer le projet (IRRÉVERSIBLE)")
         self.bouton_supprimer_projet.clicked.connect(self.supprimer_projet)
 
-        #Bloc grandes catégories
-        with open("./categorie.json", "r", encoding="utf-8") as f:
+        # Bloc grandes catégories
+        with open("json/categorie.json", "r", encoding="utf-8") as f:
             self.mapping_familles = json.load(f)
 
         self.liste_categories = QListWidget()
@@ -201,7 +201,7 @@ class MagasinVue(QWidget):
         widget_droit.setMaximumWidth(350)
         layout.addWidget(widget_droit)
         self.setLayout(layout)
-        self.setWindowTitle("MoliShop - Gérant")
+        self.setWindowTitle("Application Gérant")
         self.showMaximized()
 
         self.case_actuelle = None
@@ -242,7 +242,7 @@ class MagasinVue(QWidget):
                 self.case_cliquee(*self._parse_case(self.case_actuelle))
 
     def reset_produits(self):
-        reply = QMessageBox.question(self, "Confirmation", "Tout réinitialiser ?")
+        reply = QMessageBox.question(self, "Confirmation", "Tout réinitialiser ?")
         if reply == QMessageBox.StandardButton.Yes:
             self.controleur.reset_produits()
             self.controleur.sauvegarder()
@@ -258,10 +258,18 @@ class MagasinVue(QWidget):
         erreurs = []
         # Liste des chemins à supprimer
         chemins = [
-            self.infos_projet.get("produits_par_categories"),
-            os.path.join(os.path.dirname(self.infos_projet.get("produits_par_categories")), f"{self.infos_projet.get('nom_projet')}.json")
+            self.infos_projet.get("produits_par_categories")
+            #os.path.join(os.path.dirname(self.infos_projet.get("produits_par_categories")), f"{self.infos_projet.get('nom_projet')}.json")
         ]
 
+        chemin_fichier_projet = os.path.join("Projets", f"{self.infos_projet.get('nom_projet')}.json")
+        if os.path.exists(chemin_fichier_projet):
+            try:
+                os.remove(chemin_fichier_projet)
+            except Exception as e:
+                erreurs.append(f"{chemin_fichier_projet} : {e}")
+
+        # Suppression des autres fichiers
         for chemin in chemins:
             # Utilisation du try catch vu en R2.03
             if chemin and os.path.exists(chemin):
