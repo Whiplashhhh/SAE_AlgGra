@@ -95,6 +95,20 @@ class ClientVue(QWidget):
             self.draw_path(chemin, liste_produits)
         except Exception as e:
             QMessageBox.critical(self, "Erreur", f"Erreur lors du calcul du chemin : {e}")
+            
+    def draw_arrow(self, point):
+        taille = min(self.taille_case_x, self.taille_case_y) / 2.2
+        dx = taille / 2
+        arrow = QPolygonF([
+            QPointF(point.x() - dx, point.y() - taille/2),
+            QPointF(point.x() + dx, point.y() - taille/2),
+            QPointF(point.x(), point.y() + taille/2)
+        ])
+        arrow_item = QGraphicsPolygonItem(arrow)
+        arrow_item.setBrush(Qt.GlobalColor.red)
+        arrow_item.setPen(QPen(Qt.GlobalColor.black, 1))
+        arrow_item.setZValue(10)
+        self.scene.addItem(arrow_item)
 
     def draw_path(self, chemin, liste_produits):
         # Supprime anciens traits et flèches
@@ -150,21 +164,6 @@ class ClientVue(QWidget):
                     self.draw_arrow(point)
                 except Exception as e:
                     print(f"Erreur flèche coordonnée {coord} : {e}")
-
-
-    def draw_arrow(self, point):
-        taille = min(self.taille_case_x, self.taille_case_y) / 2.2
-        dx = taille / 2
-        arrow = QPolygonF([
-            QPointF(point.x() - dx, point.y() - taille/2),
-            QPointF(point.x() + dx, point.y() - taille/2),
-            QPointF(point.x(), point.y() + taille/2)
-        ])
-        arrow_item = QGraphicsPolygonItem(arrow)
-        arrow_item.setBrush(Qt.GlobalColor.red)
-        arrow_item.setPen(QPen(Qt.GlobalColor.black, 1))
-        arrow_item.setZValue(10)
-        self.scene.addItem(arrow_item)
 
     def col_to_int(self, col_str):
         col_str = col_str.strip().upper()
