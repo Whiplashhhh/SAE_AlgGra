@@ -10,7 +10,7 @@ from PyQt6.QtWidgets import QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton
 
 class Infos(QWidget):
     """
-    Fenêtre pour saisir les infos du projet ou charger un projet existant.
+    Fenêtre pour saisir les infos du projet ou charger un projet existant
     """
     def __init__(self, callback_on_save):
         super().__init__()
@@ -19,7 +19,7 @@ class Infos(QWidget):
         self.layout = QVBoxLayout()
         self.champs = {}
 
-        # Champs de base (nom projet, auteur, magasin, adresse)
+        # Création des champs à remplir pour l'utilisateur
         for label_text in ["Nom du projet", "Auteur", "Nom du magasin", "Adresse du magasin"]:
             self.layout.addWidget(QLabel(label_text))
             line_edit = QLineEdit()
@@ -30,7 +30,7 @@ class Infos(QWidget):
         self.date_creation = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         self.layout.addWidget(QLabel(f"Date de création : {self.date_creation}"))
 
-        # Sélection du plan (image)
+        # Sélection du plan 
         self.bouton_plan = QPushButton("Choisir le plan du magasin (image)")
         self.bouton_plan.clicked.connect(self.choisir_plan)
         self.layout.addWidget(self.bouton_plan)
@@ -48,7 +48,9 @@ class Infos(QWidget):
         self.setLayout(self.layout)
 
     def choisir_plan(self):
-        """Choisit le plan du magasin (image)."""
+        """
+        Choisit le plan du magasin (image)
+        """
         fichier, _ = QFileDialog.getOpenFileName(
             self,
             "Choisir le plan du magasin",
@@ -59,7 +61,9 @@ class Infos(QWidget):
             self.chemin_plan = fichier
 
     def valider(self):
-        """Crée un nouveau projet et les fichiers nécessaires."""
+        """
+        Crée un nouveau projet et les fichiers nécessaires
+        """
         nom_projet = self.champs["Nom du projet"].text().strip()
         if not nom_projet:
             QMessageBox.warning(self, "Erreur", "Le nom du projet est obligatoire.")
@@ -68,12 +72,12 @@ class Infos(QWidget):
             QMessageBox.warning(self, "Erreur", "Vous devez choisir un plan de magasin.")
             return
 
-        # === Le dossier de sauvegarde du projet sera TOUJOURS 'Projets/' ===
+        # Le dossier de sauvegarde du projet sera toujours 'Projets/' 
         dossier_projet = os.path.join(os.getcwd(), "Projets")
         if not os.path.exists(dossier_projet):
             os.makedirs(dossier_projet)
 
-        # === Toujours utiliser Plans/plan.jpg, copie si besoin ===
+        # Toujours utiliser Plans/plan.jpg, copie si besoin
         dossier_plans = os.path.join(os.getcwd(), "Plans")
         if not os.path.exists(dossier_plans):
             os.makedirs(dossier_plans)
@@ -91,7 +95,7 @@ class Infos(QWidget):
             with open(os.path.join(os.getcwd(), chemin_produits), "w", encoding="utf-8") as f:
                 json.dump({}, f, indent=4, ensure_ascii=False)
 
-        # === Enregistrement du json projet AVEC CHEMINS RELATIFS STANDARDS ===
+        #Enregistrement du json projet
         infos_projet = {
             "nom_projet": nom_projet,
             "auteur": self.champs["Auteur"].text(),
@@ -111,7 +115,7 @@ class Infos(QWidget):
 
     def charger_projet_existant(self):
         """
-        Charge un projet existant déjà créé.
+        Charge un projet existant déjà créé
         """
         fichier, _ = QFileDialog.getOpenFileName(
             self,
