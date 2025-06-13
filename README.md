@@ -1,7 +1,7 @@
-﻿Thomas TEITEN
-Alex FRANCOIS
-Romain THEOBALD
-Willem VANBAELINGHEM—DEZITTER
+﻿- Thomas TEITEN
+- Alex FRANCOIS
+- Romain THEOBALD
+- Willem VANBAELINGHEM—DEZITTER
 
 ## Compte rendu 10/06/2025
 
@@ -56,7 +56,7 @@ Pour lancer l'application :
 ```bash
 python main.py
 ```
-### MOT DE PASSE : VinsurVin
+#### MOT DE PASSE DE L'APPLI GÉRANT : VinsurVin
 
 ### Cette commande lance un menu qui permet à l'utilisateur de choisir entre l'application Gérant et l'application Client.
 
@@ -84,6 +84,11 @@ Application Client :
 - Il est possible d'en créer une avec des articles choisis aléatoirement.
 - Le bouton "C'est parti !" permet de lancer le dessin du chemin. Ce chemin est fait avec l'algorithme de dijkstra pour trouver le chemin le plus court entre les points.
 
-## Ce que nous aurions aimé faire
+## Ce que nous aurions aimé faire si nous avions eu plus de temps
 
-Nous aurions aimé implanter un système de prix pour chaque article afin d'avoir le coût final de notre liste de courses en plus du chemin.
+- Nous aurions aimé implanter un système de prix pour chaque article afin d'avoir le coût final de notre liste de courses en plus du chemin.
+- faire une grille ajustable avec un système qui reconnait automatiquement le rayon présent sur une case
+- améliorer le côté grapique en optimisant les placements des widgets
+- ajouter la possibilité de déplacer soi-même les widgets 
+- ajouter la possibilité de changer de thème (clair, sombre)
+- faire une barre de menu qui aurait regroupé les bouton de sauvegarde ou de charge
