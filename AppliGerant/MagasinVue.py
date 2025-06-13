@@ -177,10 +177,10 @@ class MagasinVue(QWidget):
         case_layout.addLayout(case_left)
 
         buttons_layout = QVBoxLayout()
+        buttons_layout.addWidget(self.bouton_supprimer)
         buttons_layout.addWidget(QLabel("Ajouter un produit :"))
         buttons_layout.addWidget(self.input_produit)
         buttons_layout.addWidget(self.bouton_ajout)
-        buttons_layout.addWidget(self.bouton_supprimer)
         case_layout.addLayout(buttons_layout)
 
         layout_droit.addLayout(case_layout)
@@ -195,7 +195,7 @@ class MagasinVue(QWidget):
 
         # Réunnion gauche et droite
         layout = QHBoxLayout()
-        layout.addWidget(self.view)
+        layout.addWidget(self.view, stretch=1)
         widget_droit = QWidget()
         widget_droit.setLayout(layout_droit)
         widget_droit.setMaximumWidth(350)
@@ -318,3 +318,7 @@ class MagasinVue(QWidget):
         else:
             colonne = 26 + ord(colonne_str[1]) - ord('A')
         return (ligne, colonne)
+    
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self.view.fitInView(self.scene_magasin.sceneRect(), Qt.AspectRatioMode.KeepAspectRatio)
