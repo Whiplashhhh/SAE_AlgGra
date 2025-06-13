@@ -1,13 +1,13 @@
 import sys
 import subprocess
-from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QInputDialog, QMessageBox, QLineEdit
 
 class MainMenu(QWidget):
     def __init__(self):
         super().__init__()
 
         self.setWindowTitle("Lancement de l'application")
-        self.resize(400, 200)
+        self.resize(325, 100)
 
         layout = QVBoxLayout()
 
@@ -25,9 +25,18 @@ class MainMenu(QWidget):
         self.setLayout(layout)
 
     def lancer_gerant(self):
-        # On lance le script Main_Gerant.py
-        subprocess.Popen([sys.executable, "AppliGerant/Main_Gerant.py"])
-        self.close()
+        dialog = QInputDialog(self)
+        dialog.setWindowTitle("Mot de passe")
+        dialog.setLabelText("Entre le mot de passe :")
+        dialog.setTextEchoMode(QLineEdit.EchoMode.Password)  # Affiche des ***
+        ok = dialog.exec()
+        mot_de_passe = dialog.textValue()
+        if ok:
+            if mot_de_passe == "VinsurVin":
+                subprocess.Popen([sys.executable, "AppliGerant/Main_Gerant.py"])
+                self.close()
+            else:
+                QMessageBox.critical(self, "Erreur", "Mot de passe incorrect !")
 
     def lancer_client(self):
         # On lance le script Main_Client.py
