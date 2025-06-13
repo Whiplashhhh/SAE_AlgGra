@@ -1,3 +1,7 @@
+# =================== CONTROLLER : MagasinControleur.py =====================
+# Auteurs : Romain Théobald, Thomas Teiten
+# Rôle : Gére toutes les données du client et charge les fichiers nécessaires
+# ==========================================================================
 import json
 import sys
 import numpy as np

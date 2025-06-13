@@ -1,3 +1,7 @@
+# =================== CONTROLLER : MagasinControleur.py =====================
+# Auteurs : Romain Théobald, Thomas Teiten
+# Rôle : Interface graphique utilisateur (IHM)
+# ==========================================================================
 import os
 import sys
 from PyQt6.QtWidgets import (

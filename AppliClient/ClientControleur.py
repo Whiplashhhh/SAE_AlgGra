@@ -1,4 +1,8 @@
-﻿import sys
+﻿# ====================== MODEL : MagasinModel.py ======================
+# Auteurs : Romain Théobald -- Thomas Teiten
+# Rôle : Sert d'interface entre la vue et le modèle, gère les actions utilisateur
+# ====================================================================
+import sys
 from PyQt6.QtWidgets import QApplication, QFileDialog, QListWidgetItem
 from PyQt6.QtCore import Qt
 

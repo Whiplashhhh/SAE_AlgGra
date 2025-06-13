@@ -1,7 +1,7 @@
 # =================== CONTROLLER : MagasinControleur.py =====================
 # Auteurs : Willem VANBAELINGHEM--DEZITTER, Alex FRANCOIS
-# Rôle : Sert d'interface entre la vue et le modèle, gère les actions utilisateur
-# ==========================================================================
+# Rôle : S
+# ===============ert d'interface entre la vue et le modèle, gère les actions utilisateur===========================================================
 
 class MagasinControleur:
     """
